@@ -1,0 +1,185 @@
+:root {
+  color-scheme: light;
+  --paper: #f3ead8;
+  --ink: #1f1a14;
+  --faded: #6b5e4e;
+  --rule: #d4c4a8;
+  --link: #6e2c12;
+  --link-hover: #9a3b16;
+  --measure: 38rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0 auto;
+  max-width: calc(var(--measure) + 3rem);
+  padding: 2.25rem 1.25rem 4rem;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+}
+
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+.site-header,
+.site-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-header {
+  margin-bottom: 2.75rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-footer {
+  margin-top: 3.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule);
+  color: var(--faded);
+  font-size: 0.95rem;
+}
+
+.wordmark {
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.95rem;
+}
+
+a {
+  color: var(--link);
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+.lede {
+  margin: 0 0 2rem;
+  color: var(--faded);
+  font-style: italic;
+}
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-list li {
+  margin: 0 0 1.4rem;
+}
+
+.post-list time,
+article > header time {
+  display: block;
+  color: var(--faded);
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+}
+
+.post-list a {
+  font-size: 1.35rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.post-list a:hover {
+  color: var(--link);
+}
+
+.post-list p {
+  margin: 0.25rem 0 0;
+  color: var(--faded);
+}
+
+article > header {
+  margin-bottom: 1.6rem;
+}
+
+h1 {
+  margin: 0 0 0.35rem;
+  font-size: 2.1rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.prose h2,
+.prose h3 {
+  margin: 2rem 0 0.6rem;
+  line-height: 1.25;
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin: 0 0 1rem;
+}
+
+.prose pre,
+.prose code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+
+.prose pre {
+  padding: 0.9rem 1rem;
+  overflow: auto;
+  border: 1px solid var(--rule);
+  background: #efe4cc;
+}
+
+.prose :not(pre) > code {
+  padding: 0.1em 0.3em;
+  background: #efe4cc;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose blockquote {
+  margin: 0 0 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule);
+  color: var(--faded);
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 1.05rem;
+    padding-top: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+}

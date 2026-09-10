@@ -1,0 +1,19 @@
+{
+  "name": "blog",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Personal blog at https://blog.luisliuchao.com",
+  "type": "module",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "start": "node src/serve.mjs",
+    "dev": "node src/build.mjs && node src/serve.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^15.0.12"
+  }
+}
