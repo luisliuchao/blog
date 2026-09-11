@@ -1,11 +1,13 @@
-import { mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { basename, dirname, extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
+import { collectWikiTargets, isAttachmentRef } from './obsidian.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const defaultVaultDir = '/home/Documents/notes';
 const defaultPostsDir = join(root, 'posts');
+const defaultAttachmentsDir = join(root, 'public', 'attachments');
 const defaultStatePath = join(root, '.obsidian-sync.json');
 const skipDirNames = new Set(['.obsidian', '.trash', '.git', 'node_modules']);
 
@@ -41,7 +43,7 @@ function toSlug(name, explicit) {
   return slug;
 }
 
-async function walkMarkdown(dir) {
+async function walkFiles(dir, predicate) {
   const entries = await readdir(dir, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
@@ -50,19 +52,29 @@ async function walkMarkdown(dir) {
       if (skipDirNames.has(entry.name)) {
         continue;
       }
-      files.push(...(await walkMarkdown(path)));
+      files.push(...(await walkFiles(path, predicate)));
       continue;
     }
-    if (entry.isFile() && entry.name.endsWith('.md')) {
+    if (entry.isFile() && predicate(entry.name, path)) {
       files.push(path);
     }
   }
   return files;
 }
 
+async function indexAttachments(vaultDir) {
+  const files = await walkFiles(vaultDir, (name) => isAttachmentRef(name));
+  const byName = new Map();
+  for (const path of files) {
+    byName.set(basename(path).toLowerCase(), path);
+  }
+  return byName;
+}
+
 export async function publishFromObsidian({
   vaultDir,
   postsDir = defaultPostsDir,
+  attachmentsDir = defaultAttachmentsDir,
   statePath = defaultStatePath
 }) {
   const vaultStat = await stat(vaultDir).catch(() => null);
@@ -71,12 +83,16 @@ export async function publishFromObsidian({
   }
 
   await mkdir(postsDir, { recursive: true });
+  await mkdir(attachmentsDir, { recursive: true });
   const previous = JSON.parse(await readFile(statePath, 'utf8').catch(() => '{"slugs":[]}'));
   const previousSlugs = new Set(previous.slugs ?? []);
+  const previousAttachments = new Set(previous.attachments ?? []);
   const nextSlugs = [];
+  const nextAttachments = [];
   const seen = new Set();
+  const vaultAttachments = await indexAttachments(vaultDir);
 
-  for (const path of await walkMarkdown(vaultDir)) {
+  for (const path of await walkFiles(vaultDir, (name) => name.endsWith('.md'))) {
     const raw = await readFile(path, 'utf8');
     const parsed = matter(raw);
     if (!isTruthy(parsed.data.publish) || parsed.data.draft === true) {
@@ -96,10 +112,22 @@ export async function publishFromObsidian({
     seen.add(slug);
     nextSlugs.push(slug);
     const { publish: _publish, ...rest } = parsed.data;
-    await writeFile(
-      join(postsDir, `${slug}.md`),
-      matter.stringify(parsed.content, { ...rest, title, date })
-    );
+    const body = matter.stringify(parsed.content, { ...rest, title, date });
+    await writeFile(join(postsDir, `${slug}.md`), body);
+    for (const target of collectWikiTargets(parsed.content)) {
+      if (!isAttachmentRef(target)) {
+        continue;
+      }
+      const source = vaultAttachments.get(basename(target).toLowerCase());
+      if (!source) {
+        continue;
+      }
+      const destName = basename(source);
+      await cp(source, join(attachmentsDir, destName));
+      if (!nextAttachments.includes(destName)) {
+        nextAttachments.push(destName);
+      }
+    }
     console.log(`publish ${rel} -> posts/${slug}.md`);
   }
 
@@ -109,9 +137,18 @@ export async function publishFromObsidian({
       console.log(`unpublish posts/${slug}.md`);
     }
   }
+  for (const name of previousAttachments) {
+    if (!nextAttachments.includes(name)) {
+      await rm(join(attachmentsDir, name), { force: true });
+    }
+  }
 
   nextSlugs.sort();
-  await writeFile(statePath, `${JSON.stringify({ slugs: nextSlugs }, null, 2)}\n`);
+  nextAttachments.sort();
+  await writeFile(
+    statePath,
+    `${JSON.stringify({ slugs: nextSlugs, attachments: nextAttachments }, null, 2)}\n`
+  );
   return nextSlugs;
 }
 

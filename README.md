@@ -41,7 +41,9 @@ npm run from-obsidian   # defaults to /home/Documents/notes
 
 Only notes with `publish: true` are copied into `posts/`. Clearing that flag (or setting `draft: true`) removes that copy on the next sync. Hand-written files in `posts/` such as `hello.md` are left alone. Agents never set `publish` — only you do.
 
-Use a kebab-case `slug` in front matter when the filename would not make a good URL (Chinese titles, punctuation). Wiki links (`[[Note]]`) and embeds (`![[image]]`) are not rewritten yet — use normal markdown links and images on notes you publish.
+Use a kebab-case `slug` in front matter when the filename would not make a good URL (Chinese titles, punctuation).
+
+This is the free path. Official Obsidian Publish is a paid host. Here, `[[Note]]` and `![[Note]]` resolve among notes you marked `publish: true`. `![[image.png]]` copies from the vault (`_attachments/` or anywhere in it) into `public/attachments/`. A wikilink or embed of a private note becomes plain text — the body never goes out.
 
 Do not open the whole vault as `posts/`. The blog treats every non-draft file there as public.
 
