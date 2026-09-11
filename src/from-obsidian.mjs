@@ -4,9 +4,18 @@ import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const defaultVaultDir = '/home/Documents/notes';
 const defaultPostsDir = join(root, 'posts');
 const defaultStatePath = join(root, '.obsidian-sync.json');
 const skipDirNames = new Set(['.obsidian', '.trash', '.git', 'node_modules']);
+
+function isoDate(value) {
+  if (value instanceof Date) {
+    return value.toISOString().slice(0, 10);
+  }
+  const date = String(value ?? '').trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : '';
+}
 
 function isTruthy(value) {
   return value === true || value === 'true' || value === 'yes';
@@ -74,13 +83,23 @@ export async function publishFromObsidian({
       continue;
     }
     const rel = relative(vaultDir, path);
-    const slug = toSlug(basename(path, extname(path)), parsed.data.slug);
+    const stem = basename(path, extname(path));
+    const slug = toSlug(stem, parsed.data.slug);
+    const title = String(parsed.data.title ?? stem);
+    const date = isoDate(parsed.data.date) || isoDate(parsed.data.created);
+    if (!date) {
+      throw new Error(`${rel}: date or created must be YYYY-MM-DD`);
+    }
     if (seen.has(slug)) {
       throw new Error(`duplicate published slug: ${slug}`);
     }
     seen.add(slug);
     nextSlugs.push(slug);
-    await writeFile(join(postsDir, `${slug}.md`), raw);
+    const { publish: _publish, ...rest } = parsed.data;
+    await writeFile(
+      join(postsDir, `${slug}.md`),
+      matter.stringify(parsed.content, { ...rest, title, date })
+    );
     console.log(`publish ${rel} -> posts/${slug}.md`);
   }
 
@@ -98,12 +117,7 @@ export async function publishFromObsidian({
 
 const invokedDirectly = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
 if (invokedDirectly) {
-  const vaultDir = process.argv[2] ?? process.env.BLOG_OBSIDIAN_VAULT;
-  if (!vaultDir) {
-    console.error('Usage: node src/from-obsidian.mjs <vault-dir>');
-    console.error('Or set BLOG_OBSIDIAN_VAULT.');
-    process.exit(1);
-  }
+  const vaultDir = process.argv[2] ?? process.env.BLOG_OBSIDIAN_VAULT ?? defaultVaultDir;
   const slugs = await publishFromObsidian({ vaultDir });
   console.log(`synced ${slugs.length} published note(s)`);
 }

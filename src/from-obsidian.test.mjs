@@ -44,6 +44,20 @@ test('copies only notes with publish: true', async () => {
   assert.match(await readFile(join(postsDir, 'hello.md'), 'utf8'), /Kept/);
 });
 
+test('uses created and the filename when date and title are missing', async () => {
+  const { vaultDir, postsDir, statePath } = await setup();
+  await writeFile(
+    join(vaultDir, 'Kitchen renovation.md'),
+    '---\ncreated: 2026-09-11\ntags: [home]\npublish: true\n---\n\nPlan.\n'
+  );
+
+  await publishFromObsidian({ vaultDir, postsDir, statePath });
+  const copied = await readFile(join(postsDir, 'kitchen-renovation.md'), 'utf8');
+  assert.match(copied, /title: Kitchen renovation/);
+  assert.match(copied, /date: '2026-09-11'|date: "2026-09-11"|date: 2026-09-11/);
+  assert.doesNotMatch(copied, /publish:/);
+});
+
 test('unpublishes a note when publish is removed', async () => {
   const { vaultDir, postsDir, statePath } = await setup();
   await writeFile(
