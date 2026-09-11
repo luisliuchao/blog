@@ -1,5 +1,7 @@
 # Blog repo conventions
 
+Public URL: https://blog.luisliuchao.com (Cloudflare tunnel on the Unraid host → host port 15176 → `blog-forward` socat container → blog server on workspace port 5176).
+
 ## Git workflow
 
 Work directly on `main` — no feature branches, no pull requests. This is a solo personal repo; commit to `main` and push. (Owner's standing instruction, 2026-09-11.)
