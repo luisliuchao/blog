@@ -32,14 +32,16 @@ Keep the vault private. A note is published only when you opt in.
 
 1. Write the note in `/home/Documents/notes` as usual (`created` + `tags` is enough).
 2. When you want it on the blog, set `publish: true`. Optional: `title`, `date`, `description`, `slug`. If those are missing, the filename is the title and `created` is the date.
-3. Publish:
+3. Flip `publish: true` and save. `blog-watch` notices, copies opted-in notes, and rebuilds. No need to run a command for that.
+
+Manual publish still works:
 
 ```bash
 npm run from-obsidian   # defaults to /home/Documents/notes
-~/bin/blog-up.sh        # syncs that vault, then rebuilds
+~/bin/blog-up.sh        # syncs, rebuilds, restarts the server and host forward
 ```
 
-Only notes with `publish: true` are copied into `posts/`. Clearing that flag (or setting `draft: true`) removes that copy on the next sync. Hand-written files in `posts/` such as `hello.md` are left alone. Agents never set `publish` — only you do.
+`blog-watch` is a supervisor program (`npm run watch`). It ignores `.obsidian` and private notes. It rebuilds when `publish` turns on or off, and when an already-published note is saved. Only notes with `publish: true` are copied into `posts/`. Clearing that flag (or setting `draft: true`) removes that copy on the next sync. Hand-written files in `posts/` such as `hello.md` are left alone. Agents never set `publish` — only you do.
 
 Use a kebab-case `slug` in front matter when the filename would not make a good URL (Chinese titles, punctuation).
 

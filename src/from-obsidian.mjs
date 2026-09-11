@@ -23,6 +23,11 @@ function isTruthy(value) {
   return value === true || value === 'true' || value === 'yes';
 }
 
+export function isPublishedMarkdown(raw) {
+  const parsed = matter(raw);
+  return isTruthy(parsed.data.publish) && parsed.data.draft !== true;
+}
+
 function toSlug(name, explicit) {
   if (explicit) {
     const slug = String(explicit).trim();
@@ -95,7 +100,7 @@ export async function publishFromObsidian({
   for (const path of await walkFiles(vaultDir, (name) => name.endsWith('.md'))) {
     const raw = await readFile(path, 'utf8');
     const parsed = matter(raw);
-    if (!isTruthy(parsed.data.publish) || parsed.data.draft === true) {
+    if (!isPublishedMarkdown(raw)) {
       continue;
     }
     const rel = relative(vaultDir, path);
