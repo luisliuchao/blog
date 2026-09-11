@@ -41,7 +41,7 @@ npm run from-obsidian   # defaults to /home/Documents/notes
 ~/bin/blog-up.sh        # syncs, rebuilds, restarts the server and host forward
 ```
 
-`blog-watch` is a supervisor program (`npm run watch`). It ignores `.obsidian` and private notes. It rebuilds when `publish` turns on or off, and when an already-published note is saved. Only notes with `publish: true` are copied into `posts/`. Clearing that flag (or setting `draft: true`) removes that copy on the next sync. Hand-written files in `posts/` such as `hello.md` are left alone. Agents never set `publish` — only you do.
+Workspace boot (`~/bin/blog-boot.sh`, from `bootstrap.sh`) installs deps if needed, syncs the vault, builds, starts `blog` + `blog-watch`, and recreates the host forward on **15176**. `blog-watch` (`npm run watch`) ignores `.obsidian` and private notes. It rebuilds when `publish` turns on or off, and when an already-published note is saved. Only notes with `publish: true` are copied into `posts/`. Clearing that flag (or setting `draft: true`) removes that copy on the next sync. Hand-written files in `posts/` such as `hello.md` are left alone. Agents never set `publish` — only you do.
 
 Use a kebab-case `slug` in front matter when the filename would not make a good URL (Chinese titles, punctuation).
 

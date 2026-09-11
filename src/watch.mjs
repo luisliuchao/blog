@@ -1,4 +1,4 @@
-import { watch } from 'node:fs';
+import { existsSync, watch } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import { dirname, extname, join, relative, resolve, sep } from 'node:path';
@@ -61,6 +61,7 @@ function rebuild() {
 
 const invokedDirectly = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
 if (invokedDirectly) {
+  void (async () => {
   const published = new Map();
   let timer = null;
   let running = false;
@@ -97,6 +98,13 @@ if (invokedDirectly) {
     }, debounceMs);
   }
 
+  while (!existsSync(vaultDir)) {
+    console.log(`blog-watch: waiting for ${vaultDir}`);
+    await new Promise((resolveWait) => {
+      setTimeout(resolveWait, 5000);
+    });
+  }
+
   watch(vaultDir, { recursive: true }, (_event, filename) => {
     if (!filename) {
       return;
@@ -116,4 +124,5 @@ if (invokedDirectly) {
   });
 
   console.log(`blog-watch: watching ${vaultDir}`);
+  })();
 }
