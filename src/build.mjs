@@ -2,23 +2,13 @@ import { mkdir, readdir, readFile, rm, writeFile, cp } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
-import { marked } from 'marked';
+import { escapeHtml, indexPosts, renderMarkdown } from './obsidian.mjs';
 import { site } from './site.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const postsDir = join(root, 'posts');
 const publicDir = join(root, 'public');
 const distDir = join(root, 'dist');
-
-marked.setOptions({ gfm: true });
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
-}
 
 function formatDate(iso) {
   const date = new Date(`${iso}T00:00:00Z`);
@@ -88,12 +78,23 @@ async function loadPosts() {
       title,
       date,
       description: String(parsed.data.description ?? ''),
-      html: marked.parse(parsed.content, { async: false }),
+      content: parsed.content,
       path: `/posts/${slug}/`
     });
   }
   posts.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
-  return posts;
+  const findPost = indexPosts(posts);
+  const attachments = new Map();
+  for (const name of await readdir(join(publicDir, 'attachments')).catch(() => [])) {
+    attachments.set(name.toLowerCase(), `/attachments/${encodeURI(name)}`);
+    attachments.set(name, `/attachments/${encodeURI(name)}`);
+  }
+  return posts.map((post) => {
+    return {
+      ...post,
+      html: renderMarkdown(post.content, { findPost, attachments, stack: new Set([post.slug]) })
+    };
+  });
 }
 
 function renderIndex(posts) {

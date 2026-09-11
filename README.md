@@ -26,6 +26,29 @@ Then, on the remote workspace:
 ~/bin/blog-up.sh
 ```
 
+## Write in Obsidian first
+
+Keep the vault private. A note is published only when you opt in.
+
+1. Write the note in `/home/Documents/notes` as usual (`created` + `tags` is enough).
+2. When you want it on the blog, set `publish: true`. Optional: `title`, `date`, `description`, `slug`. If those are missing, the filename is the title and `created` is the date.
+3. Flip `publish: true` and save. `blog-watch` notices, copies opted-in notes, and rebuilds. No need to run a command for that.
+
+Manual publish still works:
+
+```bash
+npm run from-obsidian   # defaults to /home/Documents/notes
+~/bin/blog-up.sh        # syncs, rebuilds, restarts the server and host forward
+```
+
+Workspace boot (`~/bin/blog-boot.sh`, from `bootstrap.sh`) installs deps if needed, syncs the vault, builds, starts `blog` + `blog-watch`, and recreates the host forward on **15176**. `blog-watch` (`npm run watch`) ignores `.obsidian` and private notes. It rebuilds when `publish` turns on or off, and when an already-published note is saved. Only notes with `publish: true` are copied into `posts/`. Clearing that flag (or setting `draft: true`) removes that copy on the next sync. Hand-written files in `posts/` such as `hello.md` are left alone. Agents never set `publish` — only you do.
+
+Use a kebab-case `slug` in front matter when the filename would not make a good URL (Chinese titles, punctuation).
+
+This is the free path. Official Obsidian Publish is a paid host. Here, `[[Note]]` and `![[Note]]` resolve among notes you marked `publish: true`. `![[image.png]]` copies from the vault (`_attachments/` or anywhere in it) into `public/attachments/`. A wikilink or embed of a private note becomes plain text — the body never goes out.
+
+Do not open the whole vault as `posts/`. The blog treats every non-draft file there as public.
+
 That pulls (if this repo is on GitHub), rebuilds, restarts the supervisor program, and refreshes the Unraid host forward on port **15176**.
 
 ## Local preview
