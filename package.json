@@ -6,8 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "node src/build.mjs",
+    "from-obsidian": "node src/from-obsidian.mjs",
     "start": "node src/serve.mjs",
-    "dev": "node src/build.mjs && node src/serve.mjs"
+    "dev": "node src/build.mjs && node src/serve.mjs",
+    "test": "node --test src/*.test.mjs"
   },
   "engines": {
     "node": ">=22"
