@@ -30,14 +30,14 @@ Then, on the remote workspace:
 
 Keep the vault private. A note is published only when you opt in.
 
-1. Write the note in `/home/Documents/notes` as usual (`created` + `tags` is enough).
+1. Write the note in `/home/Documents/remote-coding/notes` as usual (`created` + `tags` is enough).
 2. When you want it on the blog, set `publish: true`. Optional: `title`, `date`, `description`, `slug`. If those are missing, the filename is the title and `created` is the date.
 3. Flip `publish: true` and save. `blog-watch` notices, copies opted-in notes, and rebuilds. No need to run a command for that.
 
 Manual publish still works:
 
 ```bash
-npm run from-obsidian   # defaults to /home/Documents/notes
+npm run from-obsidian   # defaults to /home/Documents/remote-coding/notes
 ~/bin/blog-up.sh        # syncs, rebuilds, restarts the server and host forward
 ```
 

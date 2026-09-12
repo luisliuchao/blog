@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 import { collectWikiTargets, isAttachmentRef } from './obsidian.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const defaultVaultDir = '/home/Documents/notes';
+const defaultVaultDir = '/home/Documents/remote-coding/notes';
 const defaultPostsDir = join(root, 'posts');
 const defaultAttachmentsDir = join(root, 'public', 'attachments');
 const defaultStatePath = join(root, '.obsidian-sync.json');

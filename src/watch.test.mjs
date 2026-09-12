@@ -20,7 +20,7 @@ test('treats draft published notes as unpublished', () => {
 });
 
 test('ignores Obsidian internals and non-markdown', () => {
-  const vault = '/home/Documents/notes';
+  const vault = '/home/Documents/remote-coding/notes';
   assert.equal(isWatchedNote(vault, `${vault}/10 Projects/Plan.md`), true);
   assert.equal(isWatchedNote(vault, `${vault}/.obsidian/workspace.json`), false);
   assert.equal(isWatchedNote(vault, `${vault}/_attachments/pic.png`), false);

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { isPublishedMarkdown } from './from-obsidian.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const vaultDir = resolve(process.env.BLOG_OBSIDIAN_VAULT ?? '/home/Documents/notes');
+const vaultDir = resolve(process.env.BLOG_OBSIDIAN_VAULT ?? '/home/Documents/remote-coding/notes');
 const debounceMs = Number(process.env.BLOG_WATCH_DEBOUNCE_MS ?? 1500);
 const skipDirNames = new Set(['.obsidian', '.trash', '.git', 'node_modules']);
 

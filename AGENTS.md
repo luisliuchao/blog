@@ -12,4 +12,4 @@ Work directly on `main` — no feature branches, no pull requests. This is a sol
 
 ## Publishing model
 
-Posts come from the Obsidian vault at `/home/Documents/notes`: the watcher syncs notes with `publish: true` frontmatter into `posts/` and rebuilds. Never set `publish` on a note yourself — only the owner decides what gets published. Hand-written files in `posts/` are left alone by the sync.
+Posts come from the Obsidian vault at `/home/Documents/remote-coding/notes`: the watcher syncs notes with `publish: true` frontmatter into `posts/` and rebuilds. Never set `publish` on a note yourself — only the owner decides what gets published. Hand-written files in `posts/` are left alone by the sync.
