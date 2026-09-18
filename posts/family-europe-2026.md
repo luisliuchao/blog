@@ -17,9 +17,7 @@ raw: true
     <span id="selected-count">0 stops selected</span>
     <div class="cta-row">
       <button class="btn-ghost" type="button" id="select-none">Clear</button>
-      <button class="btn-ghost" type="button" id="plan-walk">Walk</button>
-      <button class="btn-ghost" type="button" id="plan-transit">Transit</button>
-      <button class="btn-primary" type="button" id="plan-drive">Open selected in Maps</button>
+      <button class="btn-ghost" type="button" id="plan-drive">Open selected in Maps</button>
     </div>
   </div>
 </div>
@@ -352,12 +350,6 @@ raw: true
 
     document.getElementById("plan-drive").addEventListener("click", function () {
       openItinerary(selectedStops(), "driving");
-    });
-    document.getElementById("plan-walk").addEventListener("click", function () {
-      openItinerary(selectedStops(), "walking");
-    });
-    document.getElementById("plan-transit").addEventListener("click", function () {
-      openItinerary(selectedStops(), "transit");
     });
 
     render();
