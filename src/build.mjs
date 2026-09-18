@@ -2,6 +2,7 @@ import { mkdir, readdir, readFile, rm, writeFile, cp } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
+import { isGateFlag } from './gate.mjs';
 import { escapeHtml, indexPosts, renderMarkdown } from './obsidian.mjs';
 import { site } from './site.mjs';
 
@@ -80,6 +81,7 @@ async function loadPosts() {
       description: String(parsed.data.description ?? ''),
       content: parsed.content,
       raw: parsed.data.raw === true,
+      gate: isGateFlag(parsed.data.gate),
       path: `/posts/${slug}/`
     });
   }
@@ -105,7 +107,9 @@ function renderIndex(posts) {
     .map((post) => {
       return `    <li>
       <time datetime="${post.date}">${formatDate(post.date)}</time>
-      <a href="${post.path}">${escapeHtml(post.title)}</a>
+      <a href="${post.path}">${escapeHtml(post.title)}</a>${
+        post.gate ? ' <span class="post-gate">Invite only</span>' : ''
+      }
       ${post.description ? `<p>${escapeHtml(post.description)}</p>` : ''}
     </li>`;
     })
@@ -159,8 +163,9 @@ function renderAbout() {
 }
 
 function renderFeed(posts) {
-  const updated = posts[0]?.date ?? '2026-09-10';
-  const entries = posts
+  const publicPosts = posts.filter((post) => !post.gate);
+  const updated = publicPosts[0]?.date ?? '2026-09-10';
+  const entries = publicPosts
     .map((post) => {
       return `  <entry>
     <id>${site.url}${post.path}</id>
@@ -187,7 +192,7 @@ ${entries}
 }
 
 function renderSitemap(posts) {
-  const urls = [`/`, `/about/`, ...posts.map((post) => post.path)]
+  const urls = [`/`, `/about/`, ...posts.filter((post) => !post.gate).map((post) => post.path)]
     .map((path) => `  <url><loc>${site.url}${path}</loc></url>`)
     .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -219,4 +224,8 @@ await writeFile(
   `# ${site.title}\n\n${site.tagline}. ${site.url}\n`
 );
 await cp(publicDir, distDir, { recursive: true });
+await writeFile(
+  join(distDir, 'gated.json'),
+  `${JSON.stringify(posts.filter((post) => post.gate).map((post) => post.path))}\n`
+);
 console.log(`built ${posts.length} post(s) -> dist/`);

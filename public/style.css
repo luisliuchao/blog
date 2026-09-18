@@ -115,6 +115,11 @@ article > header time {
   color: var(--link);
 }
 
+.post-gate {
+  color: var(--faded);
+  font-size: 0.85rem;
+}
+
 .post-list p {
   margin: 0.25rem 0 0;
   color: var(--faded);

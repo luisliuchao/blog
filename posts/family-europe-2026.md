@@ -3,6 +3,7 @@ title: Family Europe trip
 date: "2026-09-18"
 description: Salzburg, Munich, and Berlin, 16–29 Oct 2026, with one-click Google Maps itineraries.
 raw: true
+gate: true
 ---
 
 <div class="planner">

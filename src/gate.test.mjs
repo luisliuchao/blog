@@ -3,11 +3,15 @@ import assert from 'node:assert/strict';
 import {
   gateEnabled,
   isAllowed,
+  isGateFlag,
+  isGatedPath,
   isPublicPath,
   issueCookie,
   normalizeEmail,
+  normalizeGatePath,
   parseAllowedEmails,
   parseForm,
+  parseGatedPaths,
   safeNext,
   verifyCookie
 } from './gate.mjs';
@@ -45,11 +49,31 @@ test('signs and verifies an access cookie', () => {
   assert.equal(verifyCookie(cookie, secret, allowed, now + 40 * 24 * 60 * 60 * 1000), '');
 });
 
-test('keeps style.css and the gate public', () => {
+test('keeps style.css and the gate form public', () => {
   assert.equal(isPublicPath('/style.css'), true);
   assert.equal(isPublicPath('/access'), true);
   assert.equal(isPublicPath('/'), false);
   assert.equal(isPublicPath('/posts/family-europe-2026/'), false);
+});
+
+test('treats true-like front matter as a post gate', () => {
+  assert.equal(isGateFlag(true), true);
+  assert.equal(isGateFlag('yes'), true);
+  assert.equal(isGateFlag('true'), true);
+  assert.equal(isGateFlag(false), false);
+  assert.equal(isGateFlag(undefined), false);
+});
+
+test('gates only listed post paths', () => {
+  const gated = parseGatedPaths(['/posts/family-europe-2026/']);
+  assert.equal(normalizeGatePath('/posts/family-europe-2026/index.html'), '/posts/family-europe-2026');
+  assert.equal(isGatedPath('/posts/family-europe-2026/', gated), true);
+  assert.equal(isGatedPath('/posts/family-europe-2026', gated), true);
+  assert.equal(isGatedPath('/posts/family-europe-2026/index.html', gated), true);
+  assert.equal(isGatedPath('/', gated), false);
+  assert.equal(isGatedPath('/about/', gated), false);
+  assert.equal(isGatedPath('/posts/hello/', gated), false);
+  assert.equal(isGatedPath('/posts/family-europe-2026-extra/', gated), false);
 });
 
 test('rejects off-site redirects', () => {

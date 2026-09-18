@@ -62,9 +62,54 @@ export function gateEnabled(emails) {
   return emails.size > 0;
 }
 
+export function isGateFlag(value) {
+  return value === true || value === 'true' || value === 'yes';
+}
+
 export function isPublicPath(urlPath) {
   const path = (urlPath ?? '/').split('?')[0];
   return path === '/style.css' || path === '/access';
+}
+
+export function normalizeGatePath(urlPath) {
+  let path = (urlPath ?? '/').split('?')[0];
+  if (path.endsWith('/index.html')) {
+    path = path.slice(0, -'/index.html'.length);
+  }
+  if (path.length > 1 && path.endsWith('/')) {
+    path = path.slice(0, -1);
+  }
+  return path || '/';
+}
+
+export function parseGatedPaths(raw) {
+  const list = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  const paths = new Set();
+  if (!Array.isArray(list)) {
+    return paths;
+  }
+  for (const item of list) {
+    if (typeof item === 'string' && item.startsWith('/')) {
+      paths.add(normalizeGatePath(item));
+    }
+  }
+  return paths;
+}
+
+export function loadGatedPaths({ dist, readFile = readFileSync } = {}) {
+  const file = `${dist}/gated.json`;
+  if (!existsSync(file)) {
+    return new Set();
+  }
+  try {
+    return parseGatedPaths(readFile(file, 'utf8'));
+  } catch {
+    return new Set();
+  }
+}
+
+export function isGatedPath(urlPath, gatedPaths) {
+  return gatedPaths.has(normalizeGatePath(urlPath));
 }
 
 export function loadGateSecret({ env = process.env, readFile = readFileSync, writeFile = writeFileSync } = {}) {
@@ -170,7 +215,7 @@ export function gatePage({ next = '/', error = '' } = {}) {
   <main id="main">
     <article>
       <header>
-        <h1>This blog is private</h1>
+        <h1>This post is private</h1>
       </header>
       <div class="prose">
         ${message}

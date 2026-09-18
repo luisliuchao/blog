@@ -5,12 +5,12 @@ import { fileURLToPath } from 'node:url';
 import {
   cookieHeader,
   ensureAllowlistFile,
-  gateEnabled,
   gatePage,
   isAllowed,
-  isPublicPath,
+  isGatedPath,
   issueCookie,
   loadAllowedEmails,
+  loadGatedPaths,
   loadGateSecret,
   parseForm,
   readCookie,
@@ -109,11 +109,11 @@ function readBody(req) {
 
 const server = createServer((req, res) => {
   const allowed = loadAllowedEmails();
-  const gated = gateEnabled(allowed);
+  const gatedPaths = loadGatedPaths({ dist });
   const path = requestPath(req.url);
   const next = safeNext(requestQuery(req.url).get('next') ?? path);
 
-  if (gated && req.method === 'POST' && path === '/access') {
+  if (req.method === 'POST' && path === '/access') {
     readBody(req)
       .then((body) => {
         const form = parseForm(body);
@@ -134,12 +134,18 @@ const server = createServer((req, res) => {
     return;
   }
 
-  if (gated && path === '/access') {
+  if (path === '/access') {
     sendGate(res, { next: safeNext(requestQuery(req.url).get('next') ?? '/') });
     return;
   }
 
-  if (gated && !isPublicPath(path) && !signedIn(req, allowed)) {
+  if (path === '/gated.json') {
+    res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
+    res.end('Not found\n');
+    return;
+  }
+
+  if (isGatedPath(path, gatedPaths) && !signedIn(req, allowed)) {
     sendGate(res, { next });
     return;
   }

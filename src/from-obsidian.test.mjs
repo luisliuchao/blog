@@ -60,6 +60,19 @@ test('uses created and the filename when date and title are missing', async () =
   assert.doesNotMatch(copied, /publish:/);
 });
 
+test('keeps gate: true when copying a published note', async () => {
+  const { vaultDir, postsDir, attachmentsDir, statePath } = await setup();
+  await writeFile(
+    join(vaultDir, 'Family trip.md'),
+    '---\ntitle: Family\ndate: "2026-09-18"\npublish: true\ngate: true\n---\n\nSecret.\n'
+  );
+
+  await publishFromObsidian({ vaultDir, postsDir, attachmentsDir, statePath });
+  const copied = await readFile(join(postsDir, 'family-trip.md'), 'utf8');
+  assert.match(copied, /gate: true/);
+  assert.doesNotMatch(copied, /publish:/);
+});
+
 test('unpublishes a note when publish is removed', async () => {
   const { vaultDir, postsDir, attachmentsDir, statePath } = await setup();
   await writeFile(
