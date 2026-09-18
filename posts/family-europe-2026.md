@@ -8,7 +8,7 @@ raw: true
 <div class="planner">
   <p>家庭旅行行程单. Singapore to Salzburg, Munich, and Berlin. Each button opens a Google Maps itinerary. Google Maps allows 9 stops between start and end, so a long selection opens as sequential legs.</p>
   <div class="cta-row">
-    <button class="btn-primary" type="button" data-plan="alps">Open Alps driving plan</button>
+    <button class="btn-secondary" type="button" data-plan="alps">Open Alps driving plan</button>
     <button class="btn-secondary" type="button" data-plan="munich">Open Munich plan</button>
     <button class="btn-secondary" type="button" data-plan="berlin">Open Berlin plan</button>
   </div>
