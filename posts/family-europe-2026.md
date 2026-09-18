@@ -313,14 +313,13 @@ raw: true
         day.stops.forEach(function (stop, stopIndex) {
           const li = document.createElement("li");
           const canSelect = day.selectable !== false;
-          const checked = canSelect && !stop.hotel ? " checked" : "";
           const disabled = canSelect ? "" : " disabled";
           li.innerHTML =
             "<label>" +
               "<input type=\"checkbox\" data-query=\"" + stop.query.replace(/"/g, "") + "\"" +
                 (stop.hotel ? " data-hotel=\"1\"" : "") +
                 (stop.group ? " data-group=\"" + stop.group + "\"" : "") +
-                checked + disabled + ">" +
+                disabled + ">" +
               "<span>" + (stopIndex + 1) + ". " + stop.name + "</span>" +
             "</label>" +
             "<a href=\"" + mapsSearch(stop.query) + "\" target=\"_blank\" rel=\"noopener\">Pin</a>";
