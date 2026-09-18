@@ -33,7 +33,6 @@ raw: true
         transit: "Flight SQ 2203",
         hotel: "Overnight on the plane",
         defaultMode: "transit",
-        selectable: false,
         stops: [
           { name: "Changi Airport", query: "Singapore Changi Airport SIN" },
           { name: "Munich Airport (MUC)", query: "Munich Airport MUC" }
@@ -312,14 +311,12 @@ raw: true
         const list = article.querySelector("ul");
         day.stops.forEach(function (stop, stopIndex) {
           const li = document.createElement("li");
-          const canSelect = day.selectable !== false;
-          const disabled = canSelect ? "" : " disabled";
           li.innerHTML =
             "<label>" +
               "<input type=\"checkbox\" data-query=\"" + stop.query.replace(/"/g, "") + "\"" +
                 (stop.hotel ? " data-hotel=\"1\"" : "") +
                 (stop.group ? " data-group=\"" + stop.group + "\"" : "") +
-                disabled + ">" +
+                ">" +
               "<span>" + (stopIndex + 1) + ". " + stop.name + "</span>" +
             "</label>" +
             "<a href=\"" + mapsSearch(stop.query) + "\" target=\"_blank\" rel=\"noopener\">Pin</a>";
