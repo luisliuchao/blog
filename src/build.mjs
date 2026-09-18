@@ -79,6 +79,7 @@ async function loadPosts() {
       date,
       description: String(parsed.data.description ?? ''),
       content: parsed.content,
+      raw: parsed.data.raw === true,
       path: `/posts/${slug}/`
     });
   }
@@ -92,7 +93,9 @@ async function loadPosts() {
   return posts.map((post) => {
     return {
       ...post,
-      html: renderMarkdown(post.content, { findPost, attachments, stack: new Set([post.slug]) })
+      html: post.raw
+        ? post.content.trim()
+        : renderMarkdown(post.content, { findPost, attachments, stack: new Set([post.slug]) })
     };
   });
 }
@@ -124,7 +127,7 @@ function renderPost(post) {
     title: post.title,
     description: post.description || post.title,
     canonical: `${site.url}${post.path}`,
-    bodyClass: 'post',
+    bodyClass: post.raw ? 'post planner-page' : 'post',
     content: `    <article>
       <header>
         <h1>${escapeHtml(post.title)}</h1>

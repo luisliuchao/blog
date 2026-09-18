@@ -19,6 +19,7 @@ Body in markdown.
 ```
 
 Set `draft: true` to keep a file out of the build. Dates are `YYYY-MM-DD`.
+Set `raw: true` when the body is HTML (the family trip planner). That body is not run through markdown.
 
 Then, on the remote workspace:
 

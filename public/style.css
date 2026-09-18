@@ -184,6 +184,116 @@ h1 {
   color: var(--faded);
 }
 
+.planner-page {
+  max-width: 49rem;
+}
+
+.planner .cta-row,
+.planner .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+}
+
+.planner button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  font: 600 0.88rem/1 ui-sans-serif, system-ui, sans-serif;
+}
+
+.planner .btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.planner .btn-secondary {
+  background: #efe4cc;
+  color: var(--link);
+}
+
+.planner .btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+}
+
+.planner .panel,
+.planner .day {
+  margin: 0 0 0.85rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--rule);
+  background: #fffaf1;
+}
+
+.planner .panel h2,
+.planner .day h3 {
+  margin: 0 0 0.35rem;
+}
+
+.planner .hint,
+.planner .meta,
+.planner .hotel {
+  color: var(--faded);
+  font-size: 0.95rem;
+}
+
+.planner .day header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: flex-start;
+  margin: 0;
+}
+
+.planner .when {
+  margin: 0 0 0.15rem;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--link);
+}
+
+.planner ul.stops {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.planner ul.stops li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.55rem;
+  align-items: start;
+  padding: 0.4rem 0;
+  border-top: 1px dashed var(--rule);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.92rem;
+}
+
+.planner ul.stops label {
+  display: contents;
+  cursor: pointer;
+}
+
+.planner-bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem -1.25rem -4rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(243, 234, 216, 0.94);
+  border-top: 1px solid var(--rule);
+}
+
 @media (max-width: 640px) {
   body {
     font-size: 1.05rem;
