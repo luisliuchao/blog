@@ -188,8 +188,7 @@ h1 {
   max-width: 49rem;
 }
 
-.planner .cta-row,
-.planner .chips {
+.planner .cta-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
@@ -221,7 +220,6 @@ h1 {
   border: 1px solid var(--rule);
 }
 
-.planner .panel,
 .planner .day {
   margin: 0 0 0.85rem;
   padding: 0.9rem 1rem;
@@ -229,12 +227,10 @@ h1 {
   background: #fffaf1;
 }
 
-.planner .panel h2,
 .planner .day h3 {
   margin: 0 0 0.35rem;
 }
 
-.planner .hint,
 .planner .meta,
 .planner .hotel {
   color: var(--faded);

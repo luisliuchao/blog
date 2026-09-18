@@ -12,19 +12,11 @@ raw: true
     <button class="btn-secondary" type="button" data-plan="munich">Open Munich plan</button>
     <button class="btn-secondary" type="button" data-plan="berlin">Open Berlin plan</button>
   </div>
-  <section class="panel">
-    <h2>How to use this</h2>
-    <p class="hint">The three plan buttons open a ready-made multi-stop route. Tick stops below, then use the bar at the bottom to send only those places to Google Maps. Pin opens one place.</p>
-    <div class="chips">
-      <button class="btn-ghost" type="button" id="select-all">Select all sightseeing</button>
-      <button class="btn-ghost" type="button" id="select-none">Clear</button>
-      <button class="btn-ghost" type="button" id="select-hotels">Hotels only</button>
-    </div>
-  </section>
   <div id="days"></div>
   <div class="planner-bar">
     <span id="selected-count">0 stops selected</span>
     <div class="cta-row">
+      <button class="btn-ghost" type="button" id="select-none">Clear</button>
       <button class="btn-ghost" type="button" id="plan-walk">Walk</button>
       <button class="btn-ghost" type="button" id="plan-transit">Transit</button>
       <button class="btn-primary" type="button" id="plan-drive">Open selected in Maps</button>
@@ -353,22 +345,8 @@ raw: true
       });
     });
 
-    document.getElementById("select-all").addEventListener("click", function () {
-      document.querySelectorAll('input[data-query]:not([disabled])').forEach(function (box) {
-        box.checked = !box.hasAttribute("data-hotel");
-      });
-      updateCount();
-    });
-
     document.getElementById("select-none").addEventListener("click", function () {
       document.querySelectorAll('input[data-query]').forEach(function (box) { box.checked = false; });
-      updateCount();
-    });
-
-    document.getElementById("select-hotels").addEventListener("click", function () {
-      document.querySelectorAll('input[data-query]').forEach(function (box) {
-        box.checked = box.hasAttribute("data-hotel");
-      });
       updateCount();
     });
 
