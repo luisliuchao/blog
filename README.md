@@ -48,9 +48,17 @@ Use a kebab-case `slug` in front matter when the filename would not make a good 
 
 This is the free path. Official Obsidian Publish is a paid host. Here, `[[Note]]` and `![[Note]]` resolve among notes you marked `publish: true`. `![[image.png]]` copies from the vault (`_attachments/` or anywhere in it) into `public/attachments/`. A wikilink or embed of a private note becomes plain text — the body never goes out.
 
-Do not open the whole vault as `posts/`. The blog treats every non-draft file there as public.
+Do not open the whole vault as `posts/`. Posts in `posts/` are still built into `dist/`; viewers must type an invited email first.
 
 That pulls (if this repo is on GitHub), rebuilds, restarts the supervisor program, and refreshes the Unraid host forward on port **15176**.
+
+## Email gate
+
+The public site asks for an email before it serves posts. Matching is exact (case-insensitive). Knowing an invited address is enough; there is no one-time code.
+
+Add or remove people in `~/.blog/allowed-emails` (one address per line). The server rereads that file on each request. `luis.liu.1018@gmail.com` is seeded if the file is missing.
+
+Optional overrides: `BLOG_ALLOWED_EMAILS` (comma-separated) and `BLOG_GATE_SECRET`.
 
 ## Local preview
 

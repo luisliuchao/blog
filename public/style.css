@@ -177,6 +177,37 @@ h1 {
   margin-bottom: 0;
 }
 
+.gate-form {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 22rem;
+}
+
+.gate-form label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--faded);
+  font-size: 0.95rem;
+}
+
+.gate-form input[type='email'] {
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--rule);
+  background: #fffaf1;
+  color: var(--ink);
+  font: inherit;
+}
+
+.gate-form button {
+  appearance: none;
+  border: 1px solid var(--rule);
+  background: #efe4cc;
+  color: var(--ink);
+  padding: 0.55rem 0.9rem;
+  font: inherit;
+  cursor: pointer;
+}
+
 .prose blockquote {
   margin: 0 0 1rem;
   padding-left: 1rem;
