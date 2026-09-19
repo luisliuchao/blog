@@ -58,7 +58,7 @@ Set `gate: true` on a post to require an invited email before that post is serve
 
 Matching is exact (case-insensitive). Knowing an invited address is enough; there is no one-time code.
 
-Add or remove people in `~/.blog/allowed-emails` (one address per line). The server rereads that file on each request. `luis.liu.1018@gmail.com` is seeded if the file is missing.
+Add or remove people in `~/.blog/allowed-emails` (one address per line). The server rereads that file on each request. `jsczjxy@gmail.com` is seeded if the file is missing.
 
 Optional overrides: `BLOG_ALLOWED_EMAILS` (comma-separated) and `BLOG_GATE_SECRET`.
 

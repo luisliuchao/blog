@@ -31,7 +31,7 @@ export function parseAllowedEmails(text) {
 
 export function ensureAllowlistFile({
   env = process.env,
-  email = 'luis.liu.1018@gmail.com',
+  email = 'jsczjxy@gmail.com',
   writeFile = writeFileSync
 } = {}) {
   const file = env.BLOG_ALLOWED_EMAILS_FILE ?? `${env.HOME ?? '/home'}/.blog/allowed-emails`;
