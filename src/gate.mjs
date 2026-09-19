@@ -83,28 +83,36 @@ export function normalizeGatePath(urlPath) {
 }
 
 export function parseGatedPaths(raw) {
-  const list = typeof raw === 'string' ? JSON.parse(raw) : raw;
-  const paths = new Set();
-  if (!Array.isArray(list)) {
-    return paths;
-  }
-  for (const item of list) {
-    if (typeof item === 'string' && item.startsWith('/')) {
-      paths.add(normalizeGatePath(item));
+  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  const posts = new Map();
+  if (Array.isArray(parsed)) {
+    for (const item of parsed) {
+      if (typeof item === 'string' && item.startsWith('/')) {
+        posts.set(normalizeGatePath(item), '');
+        continue;
+      }
+      if (item && typeof item === 'object' && typeof item.path === 'string' && item.path.startsWith('/')) {
+        posts.set(normalizeGatePath(item.path), String(item.title ?? ''));
+      }
     }
+    return posts;
   }
-  return paths;
+  return posts;
+}
+
+export function gatedTitle(urlPath, gatedPaths) {
+  return gatedPaths.get(normalizeGatePath(urlPath)) ?? '';
 }
 
 export function loadGatedPaths({ dist, readFile = readFileSync } = {}) {
   const file = `${dist}/gated.json`;
   if (!existsSync(file)) {
-    return new Set();
+    return new Map();
   }
   try {
     return parseGatedPaths(readFile(file, 'utf8'));
   } catch {
-    return new Set();
+    return new Map();
   }
 }
 
@@ -194,7 +202,9 @@ export function parseForm(body) {
   };
 }
 
-export function gatePage({ next = '/', error = '' } = {}) {
+export function gatePage({ next = '/', error = '', title = '' } = {}) {
+  const heading = title || 'This post is private';
+  const pageTitle = title ? `${title} · ${site.title}` : `Enter email · ${site.title}`;
   const message = error
     ? `<p class="lede">${escapeHtml(error)}</p>`
     : `<p class="lede">Enter an invited email to continue.</p>`;
@@ -203,7 +213,7 @@ export function gatePage({ next = '/', error = '' } = {}) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Enter email · ${escapeHtml(site.title)}</title>
+  <title>${escapeHtml(pageTitle)}</title>
   <meta name="robots" content="noindex">
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -215,7 +225,7 @@ export function gatePage({ next = '/', error = '' } = {}) {
   <main id="main">
     <article>
       <header>
-        <h1>This post is private</h1>
+        <h1>${escapeHtml(heading)}</h1>
       </header>
       <div class="prose">
         ${message}

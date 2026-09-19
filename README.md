@@ -54,7 +54,7 @@ That pulls (if this repo is on GitHub), rebuilds, restarts the supervisor progra
 
 ## Email gate
 
-Set `gate: true` on a post to require an invited email before that post is served. The rest of the site stays public. Gated posts stay on the home page (marked invite only) and are left out of RSS and the sitemap.
+Set `gate: true` on a post to require an invited email before that post's body is served. The title stays visible on the home page and on the email form. The rest of the site stays public. Gated posts are left out of RSS and the sitemap.
 
 Matching is exact (case-insensitive). Knowing an invited address is enough; there is no one-time code.
 

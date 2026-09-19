@@ -6,6 +6,7 @@ import {
   cookieHeader,
   ensureAllowlistFile,
   gatePage,
+  gatedTitle,
   isAllowed,
   isGatedPath,
   issueCookie,
@@ -73,8 +74,8 @@ function requestQuery(url) {
   return new URLSearchParams(raw);
 }
 
-function sendGate(res, { next, error } = {}) {
-  const html = gatePage({ next, error });
+function sendGate(res, { next, error, gatedPaths } = {}) {
+  const html = gatePage({ next, error, title: gatedTitle(next, gatedPaths ?? new Map()) });
   res.writeHead(200, {
     'content-type': 'text/html; charset=utf-8',
     'cache-control': 'no-store',
@@ -118,7 +119,11 @@ const server = createServer((req, res) => {
       .then((body) => {
         const form = parseForm(body);
         if (!isAllowed(form.email, allowed)) {
-          sendGate(res, { next: form.next, error: 'That email is not on the list.' });
+          sendGate(res, {
+            next: form.next,
+            error: 'That email is not on the list.',
+            gatedPaths
+          });
           return;
         }
         res.writeHead(302, {
@@ -129,13 +134,16 @@ const server = createServer((req, res) => {
         res.end();
       })
       .catch(() => {
-        sendGate(res, { next, error: 'Try again with the invited email.' });
+        sendGate(res, { next, error: 'Try again with the invited email.', gatedPaths });
       });
     return;
   }
 
   if (path === '/access') {
-    sendGate(res, { next: safeNext(requestQuery(req.url).get('next') ?? '/') });
+    sendGate(res, {
+      next: safeNext(requestQuery(req.url).get('next') ?? '/'),
+      gatedPaths
+    });
     return;
   }
 
@@ -146,7 +154,7 @@ const server = createServer((req, res) => {
   }
 
   if (isGatedPath(path, gatedPaths) && !signedIn(req, allowed)) {
-    sendGate(res, { next });
+    sendGate(res, { next, gatedPaths });
     return;
   }
 

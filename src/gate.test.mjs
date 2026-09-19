@@ -2,6 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   gateEnabled,
+  gatePage,
+  gatedTitle,
   isAllowed,
   isGateFlag,
   isGatedPath,
@@ -65,7 +67,9 @@ test('treats true-like front matter as a post gate', () => {
 });
 
 test('gates only listed post paths', () => {
-  const gated = parseGatedPaths(['/posts/family-europe-2026/']);
+  const gated = parseGatedPaths([
+    { path: '/posts/family-europe-2026/', title: 'Family Europe trip' }
+  ]);
   assert.equal(normalizeGatePath('/posts/family-europe-2026/index.html'), '/posts/family-europe-2026');
   assert.equal(isGatedPath('/posts/family-europe-2026/', gated), true);
   assert.equal(isGatedPath('/posts/family-europe-2026', gated), true);
@@ -74,6 +78,14 @@ test('gates only listed post paths', () => {
   assert.equal(isGatedPath('/about/', gated), false);
   assert.equal(isGatedPath('/posts/hello/', gated), false);
   assert.equal(isGatedPath('/posts/family-europe-2026-extra/', gated), false);
+  assert.equal(gatedTitle('/posts/family-europe-2026/', gated), 'Family Europe trip');
+});
+
+test('shows the post title on the gate page', () => {
+  const html = gatePage({ next: '/posts/family-europe-2026/', title: 'Family Europe trip' });
+  assert.match(html, /<h1>Family Europe trip<\/h1>/);
+  assert.match(html, /<title>Family Europe trip · /);
+  assert.doesNotMatch(html, /This post is private/);
 });
 
 test('rejects off-site redirects', () => {

@@ -226,6 +226,10 @@ await writeFile(
 await cp(publicDir, distDir, { recursive: true });
 await writeFile(
   join(distDir, 'gated.json'),
-  `${JSON.stringify(posts.filter((post) => post.gate).map((post) => post.path))}\n`
+  `${JSON.stringify(
+    posts.filter((post) => post.gate).map((post) => {
+      return { path: post.path, title: post.title };
+    })
+  )}\n`
 );
 console.log(`built ${posts.length} post(s) -> dist/`);
