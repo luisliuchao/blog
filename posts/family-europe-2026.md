@@ -1,9 +1,15 @@
 ---
 title: Family Europe trip
-date: "2026-09-18"
-description: Hallein, Salzburg lakes, Munich, Ulm, and Berlin, 16–29 Oct 2026, with one-click Google Maps itineraries.
+date: '2026-09-18'
+created: 2026-10-04T00:00:00.000Z
+description: >-
+  Hallein, Salzburg lakes, Munich, Ulm, and Berlin, 16–29 Oct 2026, with
+  one-click Google Maps itineraries.
+slug: family-europe-2026
 raw: true
 gate: true
+tags:
+  - travel
 ---
 
 <div class="planner">
