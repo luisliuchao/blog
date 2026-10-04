@@ -1,13 +1,13 @@
 ---
 title: Family Europe trip
 date: "2026-09-18"
-description: Salzburg, Munich, and Berlin, 16–29 Oct 2026, with one-click Google Maps itineraries.
+description: Hallein, Salzburg lakes, Munich, Ulm, and Berlin, 16–29 Oct 2026, with one-click Google Maps itineraries.
 raw: true
 gate: true
 ---
 
 <div class="planner">
-  <p>家庭旅行行程单. Singapore to Salzburg, Munich, and Berlin. Each button opens a Google Maps itinerary. Google Maps allows 9 stops between start and end, so a long selection opens as sequential legs.</p>
+  <p>家庭旅行行程单. Singapore to Hallein, Salzburg, Munich, Ulm, and Berlin. Each button opens a Google Maps itinerary. Google Maps allows 9 stops between start and end, so a long selection opens as sequential legs.</p>
   <div class="cta-row">
     <button class="btn-secondary" type="button" data-plan="alps">Open Alps driving plan</button>
     <button class="btn-secondary" type="button" data-plan="munich">Open Munich plan</button>
@@ -42,146 +42,164 @@ gate: true
       {
         date: "17 Oct",
         dow: "Sat",
-        title: "MUC → Salzburg / Anif",
-        transit: "Rental car · about 2 hours",
-        hotel: "Hotel Das Essigmanngut, Anif (night 1)",
+        title: "MUC → Chiemsee → Hallein",
+        transit: "Rental car · about 2 hours, plus scenic stops",
+        hotel: "Bauernbräugut Appartements, Hallein (night 1)",
         defaultMode: "driving",
         stops: [
           { name: "Munich Airport (MUC)", query: "Munich Airport MUC", group: "alps" },
-          { name: "Hotel Das Essigmanngut", query: "Hotel Das Essigmanngut Anif Salzburg", hotel: true, group: "alps" },
-          { name: "Hellbrunn Palace gardens", query: "Schloss Hellbrunn Salzburg", group: "alps" }
+          { name: "Hilton Munich Airport (rest)", query: "Hilton Munich Airport", group: "alps" },
+          { name: "Irschenberg / Wilparting church", query: "Wallfahrtskirche Wilparting Irschenberg", group: "alps" },
+          { name: "Chiemsee lakeside + Madl am Chiemsee", query: "Madl am Chiemsee Cafe Bistro", group: "alps" },
+          { name: "Bauernbräugut Appartements", query: "Bauernbräugut Hofladen Appartements Hallein", hotel: true, group: "alps" },
+          { name: "Hellbrunn Palace gardens", query: "Schloss Hellbrunn Salzburg", group: "alps" },
+          { name: "Interspar Hallein", query: "Interspar Hallein", group: "alps" }
         ]
       },
       {
         date: "18 Oct",
         dow: "Sun",
         title: "Salzburg old town",
-        transit: "Local drive + walk",
-        hotel: "Same hotel, Anif",
+        transit: "Local drive + walk · Altstadt Garage",
+        hotel: "Same hotel, Hallein · rain: toy museum",
         defaultMode: "walking",
         stops: [
           { name: "Altstadt Garage", query: "Altstadt Garage Salzburg", group: "alps" },
           { name: "Mirabell Gardens", query: "Mirabell Gardens Salzburg", group: "alps" },
-          { name: "Mozart Square", query: "Mozartplatz Salzburg", group: "alps" },
-          { name: "Hohensalzburg Fortress", query: "Hohensalzburg Fortress", group: "alps" }
+          { name: "Café Tomaselli", query: "Café Tomaselli Salzburg", group: "alps" },
+          { name: "Residenzplatz", query: "Residenzplatz Salzburg", group: "alps" },
+          { name: "Festungsbahn / Hohensalzburg", query: "Festungsbahn Salzburg", group: "alps" },
+          { name: "Getreidegasse", query: "Getreidegasse Salzburg", group: "alps" }
         ]
       },
       {
         date: "19 Oct",
         dow: "Mon",
         title: "Hallstatt + St. Gilgen",
-        transit: "Round trip · about 1 hour each way",
-        hotel: "Same hotel, Anif",
+        transit: "Round trip · about 1h 15m out, 45m back",
+        hotel: "Same hotel, Hallein · rain: salt mine / St. Gilgen Mozart house",
         defaultMode: "driving",
         stops: [
-          { name: "Hallstatt village", query: "Hallstatt Austria", group: "alps" },
-          { name: "Hallstatt lake shore", query: "Hallstätter See promenade", group: "alps" },
-          { name: "St. Gilgen lakeside playground", query: "Seespielplatz St. Gilgen Wolfgangsee", group: "alps" }
+          { name: "Hallstatt postcard viewpoint", query: "Classical Viewpoint of Hallstatt", group: "alps" },
+          { name: "Seehotel Grüner Baum", query: "Seehotel Grüner Baum Hallstatt", group: "alps" },
+          { name: "St. Gilgen lakeside playground", query: "Strandbad St. Gilgen Playground Wolfgangsee", group: "alps" }
         ]
       },
       {
         date: "20 Oct",
         dow: "Tue",
         title: "Königssee",
-        transit: "Round trip · about 30 minutes each way",
-        hotel: "Same hotel, Anif",
+        transit: "Round trip · about 40 minutes each way",
+        hotel: "Same hotel, Hallein · rain: Berchtesgaden salt mine",
         defaultMode: "driving",
         stops: [
+          { name: "Königssee car park", query: "Königssee Parkplatz Schönau", group: "alps" },
           { name: "Königssee boat dock", query: "Königssee Schiffahrt Schönau am Königssee", group: "alps" },
-          { name: "St. Bartholomä (red dome)", query: "St. Bartholomä Königssee", group: "alps" }
+          { name: "St. Bartholomä + Fischerstüberl", query: "Fischerstüberl St. Bartholomä Königssee", group: "alps" }
         ]
       },
       {
         date: "21 Oct",
         dow: "Wed",
-        title: "Anif → Munich",
-        transit: "Drive 1.5–2 hours",
+        title: "Hallein → Munich · return car",
+        transit: "Drive ~2 hours, then bus · Gruppe M day ticket",
         hotel: "Residence Inn Munich City East (night 1)",
         defaultMode: "driving",
         stops: [
-          { name: "Hotel Das Essigmanngut", query: "Hotel Das Essigmanngut Anif Salzburg", hotel: true, group: "munich" },
+          { name: "Bauernbräugut Appartements", query: "Bauernbräugut Hofladen Appartements Hallein", hotel: true, group: "munich" },
           { name: "Residence Inn Munich City East", query: "Residence Inn by Marriott Munich City East", hotel: true, group: "munich" },
-          { name: "English Garden / river surfers", query: "Eisbachwelle Englischer Garten Munich", group: "munich" }
+          { name: "English Garden drop-off", query: "Lerchenfeldstraße 1a Munich", group: "munich" },
+          { name: "Fräulein Grüneis", query: "Fräulein Grüneis Englischer Garten Munich", group: "munich" },
+          { name: "OMV then Sixt return", query: "SIXT Car Rental Hirtenstraße 14 Munich", group: "munich" },
+          { name: "Eisbachwelle / Chinese Tower", query: "Eisbachwelle Englischer Garten Munich", group: "munich" }
         ]
       },
       {
         date: "22 Oct",
         dow: "Thu",
         title: "Ulm day trip",
-        transit: "Round trip · about 1h 15m each way",
+        transit: "ICE 1094 09:41–11:01 · ICE 919 16:28–17:42 · Gruppe M",
         hotel: "Residence Inn Munich City East",
-        defaultMode: "driving",
+        defaultMode: "transit",
         stops: [
-          { name: "Fischerviertel, Ulm", query: "Fischerviertel Ulm", group: "munich" },
-          { name: "Ulm city wall / Danube", query: "Stadtmauer Ulm Donau", group: "munich" }
+          { name: "München Ost", query: "München Ostbahnhof", group: "munich" },
+          { name: "München Hauptbahnhof", query: "München Hauptbahnhof", group: "munich" },
+          { name: "Ulm Minster", query: "Ulmer Münster Münsterplatz", group: "munich" },
+          { name: "Fischerviertel / Allgäuer Hof", query: "Allgäuer Hof Fischerviertel Ulm", group: "munich" },
+          { name: "Einstein fountain", query: "Einstein-Brunnen Ulm", group: "munich" }
         ]
       },
       {
         date: "23 Oct",
         dow: "Fri",
-        title: "BMW Welt + Nymphenburg",
-        transit: "Local drive",
-        hotel: "Residence Inn Munich City East",
-        defaultMode: "driving",
+        title: "BMW Welt + Hirschgarten + Nymphenburg",
+        transit: "U5 / U3, then tram 17 · Gruppe M",
+        hotel: "Residence Inn Munich City East · rain: Deutsches Museum",
+        defaultMode: "transit",
         stops: [
           { name: "BMW Welt", query: "BMW Welt Munich", group: "munich" },
-          { name: "Augustiner-Keller", query: "Augustiner-Keller Munich", group: "munich" },
-          { name: "Nymphenburg Palace canal", query: "Schloss Nymphenburg Munich", group: "munich" }
+          { name: "Königlicher Hirschgarten", query: "Königlicher Hirschgarten Munich", group: "munich" },
+          { name: "Nymphenburg Palace canal", query: "Nymphenburger Kanal Schloss Nymphenburg", group: "munich" }
         ]
       },
       {
         date: "24 Oct",
         dow: "Sat",
         title: "Munich Hbf → Berlin",
-        transit: "ICE · about 4 hours · Kleinkindabteil",
+        transit: "Augustiner lunch · ICE 1006 13:17–17:48 · Kleinkindabteil",
         hotel: "Adina Apartment Hotel Berlin Mitte",
         defaultMode: "transit",
         stops: [
-          { name: "München Hauptbahnhof (return car)", query: "München Hauptbahnhof", group: "munich" },
+          { name: "Augustiner-Keller", query: "Augustiner-Keller Munich", group: "munich" },
+          { name: "München Hauptbahnhof", query: "München Hauptbahnhof", group: "munich" },
           { name: "Adina Apartment Hotel Berlin Mitte", query: "Adina Apartment Hotel Berlin Mitte", hotel: true, group: "berlin" },
-          { name: "dm drugstore near hotel", query: "dm-drogerie Markt Chausseestraße Berlin", group: "berlin" }
+          { name: "Invalidenpark tram (M5/M8/M10)", query: "Invalidenpark Berlin", group: "berlin" },
+          { name: "dm / REWE before Sunday close", query: "dm-drogerie Markt Chausseestraße Berlin", group: "berlin" }
         ]
       },
       {
         date: "25 Oct",
         dow: "Sun",
         title: "Berlin Wall + Spree",
-        transit: "Taxi · about 3 minutes",
-        hotel: "Adina Berlin Mitte",
+        transit: "Tram M10 + S1 · AB Kleingruppe 24h",
+        hotel: "Adina Berlin Mitte · rain: LEGO / ANOHA / Futurium",
         defaultMode: "transit",
         stops: [
-          { name: "Berlin Wall Memorial, Bernauer Strasse", query: "Gedenkstätte Berliner Mauer Bernauer Straße", group: "berlin" },
-          { name: "Spree river cruise / Cathedral", query: "Berlin Cathedral Spree river cruise pier", group: "berlin" }
+          { name: "Berlin Wall Memorial", query: "Gedenkstätte Berliner Mauer Bernauer Straße", group: "berlin" },
+          { name: "Friedrichstraße landing stage", query: "Anlegestelle Friedrichstraße Berlin", group: "berlin" },
+          { name: "Spree glass-top cruise", query: "Spree river cruise Friedrichstraße Berlin", group: "berlin" }
         ]
       },
       {
         date: "26 Oct",
         dow: "Mon",
-        title: "Tiergarten foliage",
-        transit: "Taxi · about 5 minutes",
-        hotel: "Adina Berlin Mitte · early rest / pool",
-        defaultMode: "walking",
+        title: "Tiergarten + Brandenburg Gate",
+        transit: "M10 / M41 / bus 100–200 · AB Kleingruppe 24h",
+        hotel: "Adina Berlin Mitte · pool and jacuzzi after 15:00",
+        defaultMode: "transit",
         stops: [
           { name: "Luisendenkmal, Tiergarten", query: "Königin-Luise-Denkmal Tiergarten Berlin", group: "berlin" },
-          { name: "Café am Neuen See", query: "Café am Neuen See Berlin", group: "berlin" }
+          { name: "Café am Neuen See", query: "Café am Neuen See Berlin", group: "berlin" },
+          { name: "Brandenburg Gate", query: "Brandenburger Tor Berlin", group: "berlin" }
         ]
       },
       {
         date: "27 Oct",
         dow: "Tue",
         title: "Berlin Zoo",
-        transit: "Taxi · about 5 minutes",
+        transit: "Tram M10 + U9 · Lion Gate · AB Kleingruppe 24h",
         hotel: "Adina Berlin Mitte",
         defaultMode: "transit",
         stops: [
-          { name: "Berlin Zoo, Elephant Gate", query: "Zoo Berlin Elefantentor", group: "berlin" }
+          { name: "Berlin Zoo, Lion Gate", query: "Zoo Berlin Löwentor", group: "berlin" },
+          { name: "Zoo Restaurant", query: "Zoo Restaurant Berlin Zoologischer Garten", group: "berlin" }
         ]
       },
       {
         date: "28 Oct",
         dow: "Wed",
         title: "Schlachtensee + pack",
-        transit: "S1 · about 30 minutes",
+        transit: "Tram M5 + S1 · about 40 minutes · AB Kleingruppe 24h",
         hotel: "Adina Berlin Mitte · laundry and Mall of Berlin",
         defaultMode: "transit",
         stops: [
@@ -194,11 +212,12 @@ gate: true
         date: "29 Oct",
         dow: "Thu",
         title: "BER → Singapore",
-        transit: "Van to BER · LH 179 / SQ 329",
+        transit: "Tram M8 + FEX · ABC 24h ticket · LH 179 / SQ 329",
         hotel: "Flight home",
-        defaultMode: "driving",
+        defaultMode: "transit",
         stops: [
           { name: "Adina Apartment Hotel Berlin Mitte", query: "Adina Apartment Hotel Berlin Mitte", hotel: true, group: "berlin" },
+          { name: "Berlin Hauptbahnhof", query: "Berlin Hauptbahnhof", group: "berlin" },
           { name: "Berlin Brandenburg Airport (BER)", query: "Berlin Brandenburg Airport BER", group: "berlin" }
         ]
       }
@@ -207,36 +226,43 @@ gate: true
     const plans = {
       alps: [
         "Munich Airport MUC",
-        "Hotel Das Essigmanngut Anif Salzburg",
+        "Wallfahrtskirche Wilparting Irschenberg",
+        "Madl am Chiemsee Cafe Bistro",
+        "Bauernbräugut Hofladen Appartements Hallein",
         "Schloss Hellbrunn Salzburg",
         "Mirabell Gardens Salzburg",
-        "Hohensalzburg Fortress",
-        "Hallstatt Austria",
-        "Seespielplatz St. Gilgen Wolfgangsee",
+        "Festungsbahn Salzburg",
+        "Classical Viewpoint of Hallstatt",
+        "Strandbad St. Gilgen Playground Wolfgangsee",
         "Königssee Schiffahrt Schönau am Königssee",
-        "St. Bartholomä Königssee",
-        "Hotel Das Essigmanngut Anif Salzburg"
+        "Fischerstüberl St. Bartholomä Königssee",
+        "Bauernbräugut Hofladen Appartements Hallein"
       ],
       munich: [
         "Residence Inn by Marriott Munich City East",
+        "Lerchenfeldstraße 1a Munich",
         "Eisbachwelle Englischer Garten Munich",
-        "Fischerviertel Ulm",
-        "Stadtmauer Ulm Donau",
+        "SIXT Car Rental Hirtenstraße 14 Munich",
+        "Ulmer Münster Münsterplatz",
+        "Einstein-Brunnen Ulm",
         "BMW Welt Munich",
+        "Königlicher Hirschgarten Munich",
+        "Nymphenburger Kanal Schloss Nymphenburg",
         "Augustiner-Keller Munich",
-        "Schloss Nymphenburg Munich",
         "München Hauptbahnhof"
       ],
       berlin: [
         "Adina Apartment Hotel Berlin Mitte",
         "Gedenkstätte Berliner Mauer Bernauer Straße",
-        "Berlin Cathedral Spree river cruise pier",
+        "Anlegestelle Friedrichstraße Berlin",
         "Königin-Luise-Denkmal Tiergarten Berlin",
         "Café am Neuen See Berlin",
-        "Zoo Berlin Elefantentor",
+        "Brandenburger Tor Berlin",
+        "Zoo Berlin Löwentor",
         "S-Bahn Schlachtensee Berlin",
         "Fischerhütte am Schlachtensee",
         "Mall of Berlin Leipziger Platz",
+        "Berlin Hauptbahnhof",
         "Berlin Brandenburg Airport BER"
       ]
     };
@@ -335,7 +361,7 @@ gate: true
 
     document.querySelectorAll("[data-plan]").forEach(function (button) {
       button.addEventListener("click", function () {
-        const mode = button.getAttribute("data-plan") === "berlin" ? "transit" : "driving";
+        const mode = button.getAttribute("data-plan") === "alps" ? "driving" : "transit";
         openItinerary(plans[button.getAttribute("data-plan")], mode);
       });
     });
