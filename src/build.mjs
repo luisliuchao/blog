@@ -5,6 +5,7 @@ import matter from 'gray-matter';
 import { isGateFlag } from './gate.mjs';
 import { escapeHtml, indexPosts, renderMarkdown } from './obsidian.mjs';
 import { site } from './site.mjs';
+import { preparePlannerPosts } from './trip-planner.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const postsDir = join(root, 'posts');
@@ -82,17 +83,22 @@ async function loadPosts() {
       content: parsed.content,
       raw: parsed.data.raw === true,
       gate: isGateFlag(parsed.data.gate),
-      path: `/posts/${slug}/`
+      path: `/posts/${slug}/`,
+      planner: parsed.data.planner == null ? '' : String(parsed.data.planner),
+      plannerTitle: parsed.data.plannerTitle == null ? '' : String(parsed.data.plannerTitle),
+      plannerDescription:
+        parsed.data.plannerDescription == null ? '' : String(parsed.data.plannerDescription)
     });
   }
-  posts.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
-  const findPost = indexPosts(posts);
+  const prepared = preparePlannerPosts(posts);
+  prepared.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
+  const findPost = indexPosts(prepared);
   const attachments = new Map();
   for (const name of await readdir(join(publicDir, 'attachments')).catch(() => [])) {
     attachments.set(name.toLowerCase(), `/attachments/${encodeURI(name)}`);
     attachments.set(name, `/attachments/${encodeURI(name)}`);
   }
-  return posts.map((post) => {
+  return prepared.map((post) => {
     return {
       ...post,
       html: post.raw

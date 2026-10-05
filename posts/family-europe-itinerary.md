@@ -6,6 +6,11 @@ description: >-
   Day-by-day plan for 16–29 Oct 2026. Hallein, Salzburg, Munich, Ulm, and
   Berlin.
 slug: family-europe-itinerary
+planner: family-europe-2026
+plannerTitle: Family Europe trip
+plannerDescription: >-
+  Hallein, Salzburg lakes, Munich, Ulm, and Berlin, 16–29 Oct 2026, with
+  one-click Google Maps itineraries.
 gate: true
 tags:
   - travel
@@ -13,16 +18,46 @@ tags:
 
 家庭旅行行程单。新加坡、哈莱因、萨尔茨堡、慕尼黑、乌尔姆、柏林，2026-10-16 至 2026-10-29。地图站点在 [行程规划](/posts/family-europe-2026/)。
 
+地图页的站点和按钮从每天标题下的 planner 区块生成。改行程时改那个区块，地图会跟着更新。
+
 哈莱因四晚住 [Bauernbräugut](https://bauernbraeugut.at/)（Bauernbräuweg 1）。行程表酒店栏写成 Auernbräugut，是同一家。
 
 逐日安排是出行用的版本。文末签证版是缩短稿，和逐日安排不一致时，以逐日安排为准。
 
 ## 10月16日 周五
 
+```planner
+date: 16 Oct
+dow: Fri
+title: Singapore → Munich
+transit: Flight SQ 2203
+hotel: Overnight on the plane
+mode: transit
+stop: Changi Airport | Singapore Changi Airport SIN
+stop: Munich Airport (MUC) | Munich Airport MUC
+```
+
 - 交通：新加坡至慕尼黑，SQ 2203
 - 住宿：飞机上过夜
 
 ## 10月17日 周六
+
+```planner
+date: 17 Oct
+dow: Sat
+title: MUC → Chiemsee → Hallein
+transit: Rental car · about 2 hours, plus scenic stops
+hotel: Bauernbräugut Appartements, Hallein (night 1)
+mode: driving
+group: alps
+stop: Munich Airport (MUC) | Munich Airport MUC
+stop: Hilton Munich Airport (rest) | Hilton Munich Airport
+stop: Irschenberg / Wilparting church | Wallfahrtskirche Wilparting Irschenberg
+stop: Chiemsee lakeside + Madl am Chiemsee | Madl am Chiemsee Cafe Bistro
+stop: Bauernbräugut Appartements | Bauernbräugut Hofladen Appartements Hallein | hotel
+stop: Hellbrunn Palace gardens | Schloss Hellbrunn Salzburg
+stop: Interspar Hallein | Interspar Hallein
+```
 
 - 交通：自驾，机场开出约 2 小时
 - 住宿：Bauernbräugut - Hofladen - Appartements，哈莱因
@@ -50,6 +85,22 @@ tags:
 
 ## 10月18日 周日
 
+```planner
+date: 18 Oct
+dow: Sun
+title: Salzburg old town
+transit: Local drive + walk · Altstadt Garage
+hotel: Same hotel, Hallein · rain: toy museum
+mode: walking
+group: alps
+stop: Altstadt Garage | Altstadt Garage Salzburg
+stop: Mirabell Gardens | Mirabell Gardens Salzburg
+stop: Café Tomaselli | Café Tomaselli Salzburg
+stop: Residenzplatz | Residenzplatz Salzburg
+stop: Festungsbahn / Hohensalzburg | Festungsbahn Salzburg
+stop: Getreidegasse | Getreidegasse Salzburg
+```
+
 - 交通：自驾，市区短途
 - 住宿：Bauernbräugut，哈莱因
 - 下雨：玩具博物馆
@@ -74,6 +125,19 @@ tags:
 
 ## 10月19日 周一
 
+```planner
+date: 19 Oct
+dow: Mon
+title: Hallstatt + St. Gilgen
+transit: Round trip · about 1h 15m out, 45m back
+hotel: Same hotel, Hallein · rain: salt mine / St. Gilgen Mozart house
+mode: driving
+group: alps
+stop: Hallstatt postcard viewpoint | Classical Viewpoint of Hallstatt
+stop: Seehotel Grüner Baum | Seehotel Grüner Baum Hallstatt
+stop: St. Gilgen lakeside playground | Strandbad St. Gilgen Playground Wolfgangsee
+```
+
 - 交通：自驾，单程约 1 小时 15 分钟
 - 住宿：Bauernbräugut，哈莱因
 - 下雨：哈尔施塔特盐矿、博物馆、圣吉尔根莫扎特之家、巴德伊舍温泉浴场
@@ -95,6 +159,19 @@ tags:
 - 16:30–17:15 开车约 45 分钟回哈莱因，避开傍晚降温。
 
 ## 10月20日 周二
+
+```planner
+date: 20 Oct
+dow: Tue
+title: Königssee
+transit: Round trip · about 40 minutes each way
+hotel: Same hotel, Hallein · rain: Berchtesgaden salt mine
+mode: driving
+group: alps
+stop: Königssee car park | Königssee Parkplatz Schönau
+stop: Königssee boat dock | Königssee Schiffahrt Schönau am Königssee
+stop: St. Bartholomä + Fischerstüberl | Fischerstüberl St. Bartholomä Königssee
+```
 
 - 交通：自驾，单程约 40 分钟
 - 住宿：Bauernbräugut，哈莱因
@@ -119,6 +196,22 @@ tags:
 - 15:30–16:10 取车，开车约 40 分钟回哈莱因。
 
 ## 10月21日 周三
+
+```planner
+date: 21 Oct
+dow: Wed
+title: Hallein → Munich · return car
+transit: Drive ~2 hours, then bus · Gruppe M day ticket
+hotel: Residence Inn Munich City East (night 1)
+mode: driving
+group: munich
+stop: Bauernbräugut Appartements | Bauernbräugut Hofladen Appartements Hallein | hotel
+stop: Residence Inn Munich City East | Residence Inn by Marriott Munich City East | hotel
+stop: English Garden drop-off | Lerchenfeldstraße 1a Munich
+stop: Fräulein Grüneis | Fräulein Grüneis Englischer Garten Munich
+stop: OMV then Sixt return | SIXT Car Rental Hirtenstraße 14 Munich
+stop: Eisbachwelle / Chinese Tower | Eisbachwelle Englischer Garten Munich
+```
 
 - 交通：自驾加地铁，约 1.5–2 小时。慕尼黑 M 区小团体日票 Gruppen-Tageskarte Zone M
 - 住宿：Residence Inn by Marriott Munich City East
@@ -147,6 +240,21 @@ tags:
 - 18:30–20:00 在公寓厨房做晚饭。
 
 ## 10月22日 周四
+
+```planner
+date: 22 Oct
+dow: Thu
+title: Ulm day trip
+transit: ICE 1094 09:41–11:01 · ICE 919 16:28–17:42 · Gruppe M
+hotel: Residence Inn Munich City East
+mode: transit
+group: munich
+stop: München Ost | München Ostbahnhof
+stop: München Hauptbahnhof | München Hauptbahnhof
+stop: Ulm Minster | Ulmer Münster Münsterplatz
+stop: Fischerviertel / Allgäuer Hof | Allgäuer Hof Fischerviertel Ulm
+stop: Einstein fountain | Einstein-Brunnen Ulm
+```
 
 - 交通：高铁和地铁。慕尼黑 M 区小团体日票 Gruppen-Tageskarte Zone M
 - 住宿：Residence Inn by Marriott Munich City East
@@ -179,6 +287,19 @@ tags:
 
 ## 10月23日 周五
 
+```planner
+date: 23 Oct
+dow: Fri
+title: BMW Welt + Hirschgarten + Nymphenburg
+transit: U5 / U3, then tram 17 · Gruppe M
+hotel: Residence Inn Munich City East · rain: Deutsches Museum
+mode: transit
+group: munich
+stop: BMW Welt | BMW Welt Munich
+stop: Königlicher Hirschgarten | Königlicher Hirschgarten Munich
+stop: Nymphenburg Palace canal | Nymphenburger Kanal Schloss Nymphenburg
+```
+
 - 交通：地铁。慕尼黑 M 区小团体日票 Gruppen-Tageskarte Zone M
 - 住宿：Residence Inn by Marriott Munich City East
 - 下雨：德意志博物馆、慕尼黑海洋生物水族馆、老城区玩具博物馆、儿童与青少年博物馆
@@ -203,6 +324,20 @@ tags:
 - 18:30–20:00 回公寓吃晚饭。宝宝 20:00 上床。
 
 ## 10月24日 周六
+
+```planner
+date: 24 Oct
+dow: Sat
+title: Munich Hbf → Berlin
+transit: Augustiner lunch · ICE 1006 13:17–17:48 · Kleinkindabteil
+hotel: Adina Apartment Hotel Berlin Mitte
+mode: transit
+stop: Augustiner-Keller | Augustiner-Keller Munich | munich
+stop: München Hauptbahnhof | München Hauptbahnhof | munich
+stop: Adina Apartment Hotel Berlin Mitte | Adina Apartment Hotel Berlin Mitte | hotel | berlin
+stop: Invalidenpark tram (M5/M8/M10) | Invalidenpark Berlin | berlin
+stop: dm / REWE before Sunday close | dm-drogerie Markt Chausseestraße Berlin | berlin
+```
 
 - 交通：德国高铁约 4 小时，加单程有轨电车。4 张慕尼黑单程票 Zone M（Single Ticket）。4 张柏林短途票（Kurzstrecke）
 - 住宿：Adina Apartment Hotel Berlin Mitte
@@ -230,6 +365,19 @@ tags:
 
 ## 10月25日 周日
 
+```planner
+date: 25 Oct
+dow: Sun
+title: Berlin Wall + Spree
+transit: Tram M10 + S1 · AB Kleingruppe 24h
+hotel: Adina Berlin Mitte · rain: LEGO / ANOHA / Futurium
+mode: transit
+group: berlin
+stop: Berlin Wall Memorial | Gedenkstätte Berliner Mauer Bernauer Straße
+stop: Friedrichstraße landing stage | Anlegestelle Friedrichstraße Berlin
+stop: Spree glass-top cruise | Spree river cruise Friedrichstraße Berlin
+```
+
 - 交通：有轨电车。柏林 AB 区小团体 24 小时票 Kleingruppen-Tageskarte
 - 住宿：Adina Apartment Hotel Berlin Mitte
 - 下雨：乐高探索中心、FEZ-Berlin、ANOHA、Futurium
@@ -251,6 +399,19 @@ tags:
 - 16:20–18:30 回房间。长辈休息，妈妈陪宝宝洗澡。用厨房做清淡晚饭。宝宝 20:00 熄灯。
 
 ## 10月26日 周一
+
+```planner
+date: 26 Oct
+dow: Mon
+title: Tiergarten + Brandenburg Gate
+transit: M10 / M41 / bus 100–200 · AB Kleingruppe 24h
+hotel: Adina Berlin Mitte · pool and jacuzzi after 15:00
+mode: transit
+group: berlin
+stop: Luisendenkmal, Tiergarten | Königin-Luise-Denkmal Tiergarten Berlin
+stop: Café am Neuen See | Café am Neuen See Berlin
+stop: Brandenburg Gate | Brandenburger Tor Berlin
+```
 
 - 交通：有轨电车和公交。柏林 AB 区小团体 24 小时票
 - 住宿：Adina Apartment Hotel Berlin Mitte
@@ -274,6 +435,18 @@ tags:
 
 ## 10月27日 周二
 
+```planner
+date: 27 Oct
+dow: Tue
+title: Berlin Zoo
+transit: Tram M10 + U9 · Lion Gate · AB Kleingruppe 24h
+hotel: Adina Berlin Mitte
+mode: transit
+group: berlin
+stop: Berlin Zoo, Lion Gate | Zoo Berlin Löwentor
+stop: Zoo Restaurant | Zoo Restaurant Berlin Zoologischer Garten
+```
+
 - 交通：有轨电车和地铁。柏林 AB 区小团体 24 小时票
 - 住宿：Adina Apartment Hotel Berlin Mitte
 
@@ -294,6 +467,19 @@ tags:
 - 18:30–20:00 做晚饭。宝宝 20:00 熄灯。
 
 ## 10月28日 周三
+
+```planner
+date: 28 Oct
+dow: Wed
+title: Schlachtensee + pack
+transit: Tram M5 + S1 · about 40 minutes · AB Kleingruppe 24h
+hotel: Adina Berlin Mitte · laundry and Mall of Berlin
+mode: transit
+group: berlin
+stop: Schlachtensee S-Bahn | S-Bahn Schlachtensee Berlin
+stop: Fischerhütte | Fischerhütte am Schlachtensee
+stop: Mall of Berlin | Mall of Berlin Leipziger Platz
+```
 
 - 交通：轻轨 S-Bahn，约 30–40 分钟。柏林 AB 区小团体 24 小时票
 - 住宿：Adina Apartment Hotel Berlin Mitte
@@ -317,6 +503,19 @@ tags:
 - 18:30–20:00 回房间煮清淡汤面。晚饭后行李贴标签、封箱。宝宝 20:00 熄灯。
 
 ## 10月29日 周四
+
+```planner
+date: 29 Oct
+dow: Thu
+title: BER → Singapore
+transit: Tram M8 + FEX · ABC 24h ticket · LH 179 / SQ 329
+hotel: Flight home
+mode: transit
+group: berlin
+stop: Adina Apartment Hotel Berlin Mitte | Adina Apartment Hotel Berlin Mitte | hotel
+stop: Berlin Hauptbahnhof | Berlin Hauptbahnhof
+stop: Berlin Brandenburg Airport (BER) | Berlin Brandenburg Airport BER
+```
 
 - 交通：有轨电车，再加机场快线。柏林 ABC 区 24 小时小团体票 24-Stunden-Karte Kleingruppe
 - 住宿：飞机上，返回新加坡
