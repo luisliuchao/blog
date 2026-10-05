@@ -1,386 +1,359 @@
 ---
 title: Family Europe trip
 date: '2026-09-18'
-created: 2026-10-04T00:00:00.000Z
-description: >-
-  Hallein, Salzburg lakes, Munich, Ulm, and Berlin, 16–29 Oct 2026, with
-  one-click Google Maps itineraries.
+created: '2026-10-04'
+description: '2026-10-16 to 2026-10-29. Hallein, Salzburg, Munich, Ulm, and Berlin.'
 slug: family-europe-2026
-raw: true
 gate: true
 tags:
   - travel
 ---
 
-<div class="planner">
-  <p>家庭旅行行程单. Singapore to Hallein, Salzburg, Munich, Ulm, and Berlin. Each button opens a Google Maps itinerary. Google Maps allows 9 stops between start and end, so a long selection opens as sequential legs.</p>
-  <div class="cta-row">
-    <button class="btn-secondary" type="button" data-plan="alps">Open Alps driving plan</button>
-    <button class="btn-secondary" type="button" data-plan="munich">Open Munich plan</button>
-    <button class="btn-secondary" type="button" data-plan="berlin">Open Berlin plan</button>
-  </div>
-  <div id="days"></div>
-  <div class="planner-bar">
-    <span id="selected-count">0 stops selected</span>
-    <div class="cta-row">
-      <button class="btn-ghost" type="button" id="select-none">Clear</button>
-      <button class="btn-ghost" type="button" id="plan-drive">Open selected in Maps</button>
-    </div>
-  </div>
-</div>
-<script>
+家庭旅行行程单。新加坡、哈莱因、萨尔茨堡、慕尼黑、乌尔姆、柏林，2026-10-16 至 2026-10-29。
 
-    const MAX_WAYPOINTS = 9;
+哈莱因四晚住 [Bauernbräugut](https://bauernbraeugut.at/)（Bauernbräuweg 1）。行程表酒店栏写成 Auernbräugut，是同一家。
 
-    const days = [
-      {
-        date: "16 Oct",
-        dow: "Fri",
-        title: "Singapore → Munich",
-        transit: "Flight SQ 2203",
-        hotel: "Overnight on the plane",
-        defaultMode: "transit",
-        stops: [
-          { name: "Changi Airport", query: "Singapore Changi Airport SIN" },
-          { name: "Munich Airport (MUC)", query: "Munich Airport MUC" }
-        ]
-      },
-      {
-        date: "17 Oct",
-        dow: "Sat",
-        title: "MUC → Chiemsee → Hallein",
-        transit: "Rental car · about 2 hours, plus scenic stops",
-        hotel: "Bauernbräugut Appartements, Hallein (night 1)",
-        defaultMode: "driving",
-        stops: [
-          { name: "Munich Airport (MUC)", query: "Munich Airport MUC", group: "alps" },
-          { name: "Hilton Munich Airport (rest)", query: "Hilton Munich Airport", group: "alps" },
-          { name: "Irschenberg / Wilparting church", query: "Wallfahrtskirche Wilparting Irschenberg", group: "alps" },
-          { name: "Chiemsee lakeside + Madl am Chiemsee", query: "Madl am Chiemsee Cafe Bistro", group: "alps" },
-          { name: "Bauernbräugut Appartements", query: "Bauernbräugut Hofladen Appartements Hallein", hotel: true, group: "alps" },
-          { name: "Hellbrunn Palace gardens", query: "Schloss Hellbrunn Salzburg", group: "alps" },
-          { name: "Interspar Hallein", query: "Interspar Hallein", group: "alps" }
-        ]
-      },
-      {
-        date: "18 Oct",
-        dow: "Sun",
-        title: "Salzburg old town",
-        transit: "Local drive + walk · Altstadt Garage",
-        hotel: "Same hotel, Hallein · rain: toy museum",
-        defaultMode: "walking",
-        stops: [
-          { name: "Altstadt Garage", query: "Altstadt Garage Salzburg", group: "alps" },
-          { name: "Mirabell Gardens", query: "Mirabell Gardens Salzburg", group: "alps" },
-          { name: "Café Tomaselli", query: "Café Tomaselli Salzburg", group: "alps" },
-          { name: "Residenzplatz", query: "Residenzplatz Salzburg", group: "alps" },
-          { name: "Festungsbahn / Hohensalzburg", query: "Festungsbahn Salzburg", group: "alps" },
-          { name: "Getreidegasse", query: "Getreidegasse Salzburg", group: "alps" }
-        ]
-      },
-      {
-        date: "19 Oct",
-        dow: "Mon",
-        title: "Hallstatt + St. Gilgen",
-        transit: "Round trip · about 1h 15m out, 45m back",
-        hotel: "Same hotel, Hallein · rain: salt mine / St. Gilgen Mozart house",
-        defaultMode: "driving",
-        stops: [
-          { name: "Hallstatt postcard viewpoint", query: "Classical Viewpoint of Hallstatt", group: "alps" },
-          { name: "Seehotel Grüner Baum", query: "Seehotel Grüner Baum Hallstatt", group: "alps" },
-          { name: "St. Gilgen lakeside playground", query: "Strandbad St. Gilgen Playground Wolfgangsee", group: "alps" }
-        ]
-      },
-      {
-        date: "20 Oct",
-        dow: "Tue",
-        title: "Königssee",
-        transit: "Round trip · about 40 minutes each way",
-        hotel: "Same hotel, Hallein · rain: Berchtesgaden salt mine",
-        defaultMode: "driving",
-        stops: [
-          { name: "Königssee car park", query: "Königssee Parkplatz Schönau", group: "alps" },
-          { name: "Königssee boat dock", query: "Königssee Schiffahrt Schönau am Königssee", group: "alps" },
-          { name: "St. Bartholomä + Fischerstüberl", query: "Fischerstüberl St. Bartholomä Königssee", group: "alps" }
-        ]
-      },
-      {
-        date: "21 Oct",
-        dow: "Wed",
-        title: "Hallein → Munich · return car",
-        transit: "Drive ~2 hours, then bus · Gruppe M day ticket",
-        hotel: "Residence Inn Munich City East (night 1)",
-        defaultMode: "driving",
-        stops: [
-          { name: "Bauernbräugut Appartements", query: "Bauernbräugut Hofladen Appartements Hallein", hotel: true, group: "munich" },
-          { name: "Residence Inn Munich City East", query: "Residence Inn by Marriott Munich City East", hotel: true, group: "munich" },
-          { name: "English Garden drop-off", query: "Lerchenfeldstraße 1a Munich", group: "munich" },
-          { name: "Fräulein Grüneis", query: "Fräulein Grüneis Englischer Garten Munich", group: "munich" },
-          { name: "OMV then Sixt return", query: "SIXT Car Rental Hirtenstraße 14 Munich", group: "munich" },
-          { name: "Eisbachwelle / Chinese Tower", query: "Eisbachwelle Englischer Garten Munich", group: "munich" }
-        ]
-      },
-      {
-        date: "22 Oct",
-        dow: "Thu",
-        title: "Ulm day trip",
-        transit: "ICE 1094 09:41–11:01 · ICE 919 16:28–17:42 · Gruppe M",
-        hotel: "Residence Inn Munich City East",
-        defaultMode: "transit",
-        stops: [
-          { name: "München Ost", query: "München Ostbahnhof", group: "munich" },
-          { name: "München Hauptbahnhof", query: "München Hauptbahnhof", group: "munich" },
-          { name: "Ulm Minster", query: "Ulmer Münster Münsterplatz", group: "munich" },
-          { name: "Fischerviertel / Allgäuer Hof", query: "Allgäuer Hof Fischerviertel Ulm", group: "munich" },
-          { name: "Einstein fountain", query: "Einstein-Brunnen Ulm", group: "munich" }
-        ]
-      },
-      {
-        date: "23 Oct",
-        dow: "Fri",
-        title: "BMW Welt + Hirschgarten + Nymphenburg",
-        transit: "U5 / U3, then tram 17 · Gruppe M",
-        hotel: "Residence Inn Munich City East · rain: Deutsches Museum",
-        defaultMode: "transit",
-        stops: [
-          { name: "BMW Welt", query: "BMW Welt Munich", group: "munich" },
-          { name: "Königlicher Hirschgarten", query: "Königlicher Hirschgarten Munich", group: "munich" },
-          { name: "Nymphenburg Palace canal", query: "Nymphenburger Kanal Schloss Nymphenburg", group: "munich" }
-        ]
-      },
-      {
-        date: "24 Oct",
-        dow: "Sat",
-        title: "Munich Hbf → Berlin",
-        transit: "Augustiner lunch · ICE 1006 13:17–17:48 · Kleinkindabteil",
-        hotel: "Adina Apartment Hotel Berlin Mitte",
-        defaultMode: "transit",
-        stops: [
-          { name: "Augustiner-Keller", query: "Augustiner-Keller Munich", group: "munich" },
-          { name: "München Hauptbahnhof", query: "München Hauptbahnhof", group: "munich" },
-          { name: "Adina Apartment Hotel Berlin Mitte", query: "Adina Apartment Hotel Berlin Mitte", hotel: true, group: "berlin" },
-          { name: "Invalidenpark tram (M5/M8/M10)", query: "Invalidenpark Berlin", group: "berlin" },
-          { name: "dm / REWE before Sunday close", query: "dm-drogerie Markt Chausseestraße Berlin", group: "berlin" }
-        ]
-      },
-      {
-        date: "25 Oct",
-        dow: "Sun",
-        title: "Berlin Wall + Spree",
-        transit: "Tram M10 + S1 · AB Kleingruppe 24h",
-        hotel: "Adina Berlin Mitte · rain: LEGO / ANOHA / Futurium",
-        defaultMode: "transit",
-        stops: [
-          { name: "Berlin Wall Memorial", query: "Gedenkstätte Berliner Mauer Bernauer Straße", group: "berlin" },
-          { name: "Friedrichstraße landing stage", query: "Anlegestelle Friedrichstraße Berlin", group: "berlin" },
-          { name: "Spree glass-top cruise", query: "Spree river cruise Friedrichstraße Berlin", group: "berlin" }
-        ]
-      },
-      {
-        date: "26 Oct",
-        dow: "Mon",
-        title: "Tiergarten + Brandenburg Gate",
-        transit: "M10 / M41 / bus 100–200 · AB Kleingruppe 24h",
-        hotel: "Adina Berlin Mitte · pool and jacuzzi after 15:00",
-        defaultMode: "transit",
-        stops: [
-          { name: "Luisendenkmal, Tiergarten", query: "Königin-Luise-Denkmal Tiergarten Berlin", group: "berlin" },
-          { name: "Café am Neuen See", query: "Café am Neuen See Berlin", group: "berlin" },
-          { name: "Brandenburg Gate", query: "Brandenburger Tor Berlin", group: "berlin" }
-        ]
-      },
-      {
-        date: "27 Oct",
-        dow: "Tue",
-        title: "Berlin Zoo",
-        transit: "Tram M10 + U9 · Lion Gate · AB Kleingruppe 24h",
-        hotel: "Adina Berlin Mitte",
-        defaultMode: "transit",
-        stops: [
-          { name: "Berlin Zoo, Lion Gate", query: "Zoo Berlin Löwentor", group: "berlin" },
-          { name: "Zoo Restaurant", query: "Zoo Restaurant Berlin Zoologischer Garten", group: "berlin" }
-        ]
-      },
-      {
-        date: "28 Oct",
-        dow: "Wed",
-        title: "Schlachtensee + pack",
-        transit: "Tram M5 + S1 · about 40 minutes · AB Kleingruppe 24h",
-        hotel: "Adina Berlin Mitte · laundry and Mall of Berlin",
-        defaultMode: "transit",
-        stops: [
-          { name: "Schlachtensee S-Bahn", query: "S-Bahn Schlachtensee Berlin", group: "berlin" },
-          { name: "Fischerhütte", query: "Fischerhütte am Schlachtensee", group: "berlin" },
-          { name: "Mall of Berlin", query: "Mall of Berlin Leipziger Platz", group: "berlin" }
-        ]
-      },
-      {
-        date: "29 Oct",
-        dow: "Thu",
-        title: "BER → Singapore",
-        transit: "Tram M8 + FEX · ABC 24h ticket · LH 179 / SQ 329",
-        hotel: "Flight home",
-        defaultMode: "transit",
-        stops: [
-          { name: "Adina Apartment Hotel Berlin Mitte", query: "Adina Apartment Hotel Berlin Mitte", hotel: true, group: "berlin" },
-          { name: "Berlin Hauptbahnhof", query: "Berlin Hauptbahnhof", group: "berlin" },
-          { name: "Berlin Brandenburg Airport (BER)", query: "Berlin Brandenburg Airport BER", group: "berlin" }
-        ]
-      }
-    ];
+逐日安排是出行用的版本。文末签证版是缩短稿，和逐日安排不一致时，以逐日安排为准。
 
-    const plans = {
-      alps: [
-        "Munich Airport MUC",
-        "Wallfahrtskirche Wilparting Irschenberg",
-        "Madl am Chiemsee Cafe Bistro",
-        "Bauernbräugut Hofladen Appartements Hallein",
-        "Schloss Hellbrunn Salzburg",
-        "Mirabell Gardens Salzburg",
-        "Festungsbahn Salzburg",
-        "Classical Viewpoint of Hallstatt",
-        "Strandbad St. Gilgen Playground Wolfgangsee",
-        "Königssee Schiffahrt Schönau am Königssee",
-        "Fischerstüberl St. Bartholomä Königssee",
-        "Bauernbräugut Hofladen Appartements Hallein"
-      ],
-      munich: [
-        "Residence Inn by Marriott Munich City East",
-        "Lerchenfeldstraße 1a Munich",
-        "Eisbachwelle Englischer Garten Munich",
-        "SIXT Car Rental Hirtenstraße 14 Munich",
-        "Ulmer Münster Münsterplatz",
-        "Einstein-Brunnen Ulm",
-        "BMW Welt Munich",
-        "Königlicher Hirschgarten Munich",
-        "Nymphenburger Kanal Schloss Nymphenburg",
-        "Augustiner-Keller Munich",
-        "München Hauptbahnhof"
-      ],
-      berlin: [
-        "Adina Apartment Hotel Berlin Mitte",
-        "Gedenkstätte Berliner Mauer Bernauer Straße",
-        "Anlegestelle Friedrichstraße Berlin",
-        "Königin-Luise-Denkmal Tiergarten Berlin",
-        "Café am Neuen See Berlin",
-        "Brandenburger Tor Berlin",
-        "Zoo Berlin Löwentor",
-        "S-Bahn Schlachtensee Berlin",
-        "Fischerhütte am Schlachtensee",
-        "Mall of Berlin Leipziger Platz",
-        "Berlin Hauptbahnhof",
-        "Berlin Brandenburg Airport BER"
-      ]
-    };
+## 10月16日 周五
 
-    function mapsSearch(query) {
-      return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
-    }
+- 交通：新加坡至慕尼黑，SQ 2203
+- 住宿：飞机上过夜
 
-    function mapsDir(stops, mode) {
-      if (stops.length === 1) return mapsSearch(stops[0]);
-      const origin = encodeURIComponent(stops[0]);
-      const destination = encodeURIComponent(stops[stops.length - 1]);
-      const mid = stops.slice(1, -1);
-      let url = "https://www.google.com/maps/dir/?api=1&origin=" + origin +
-        "&destination=" + destination + "&travelmode=" + encodeURIComponent(mode);
-      if (mid.length) url += "&waypoints=" + mid.map(encodeURIComponent).join("%7C");
-      return url;
-    }
+## 10月17日 周六
 
-    function openItinerary(stops, mode) {
-      const unique = [];
-      stops.forEach(function (stop) {
-        if (stop && unique[unique.length - 1] !== stop) unique.push(stop);
-      });
-      if (!unique.length) return;
-      const chunks = [];
-      if (unique.length <= MAX_WAYPOINTS + 2) {
-        chunks.push(unique);
-      } else {
-        let i = 0;
-        while (i < unique.length) {
-          const end = Math.min(i + MAX_WAYPOINTS + 2, unique.length);
-          chunks.push(unique.slice(i, end));
-          i = end - 1;
-        }
-      }
-      chunks.forEach(function (chunk, index) {
-        window.open(mapsDir(chunk, mode), "_blank", "noopener");
-        if (index < chunks.length - 1) {
-          /* A second tab continues the same route from the last shared stop. */
-        }
-      });
-    }
+- 交通：自驾，机场开出约 2 小时
+- 住宿：Bauernbräugut - Hofladen - Appartements，哈莱因
+- 下雨：在午餐处多待
 
-    function selectedStops() {
-      return Array.from(document.querySelectorAll('input[type="checkbox"][data-query]:checked'))
-        .map(function (box) { return box.getAttribute("data-query"); });
-    }
+上午
 
-    function updateCount() {
-      const n = selectedStops().length;
-      document.getElementById("selected-count").textContent =
-        n + (n === 1 ? " stop selected" : " stops selected");
-    }
+- 5:15 抵达慕尼黑机场（MUC）。取行李、入境后，在 Hilton Munich Airport 大厅稍作休息。
+- 7:30 取车，装好儿童安全座椅。用 Asfinag App 花 11.5 欧元买奥地利 10 天数字高速徽标（Digital Vignette）。
+- 8:00–9:00 前往伊尔申贝格 Irschenberg 观景点。长辈和宝宝可以在车里补眠。准备好零食（飞机餐面包等）。
+- 9:00–10:00 清晨的光打在红顶维尔帕廷朝圣教堂 Wallfahrtskirche Wilparting 和山坡牧场上。阿尔卑斯山还罩着晨雾。
+- 10:00–10:35 前往基姆湖 Chiemsee，全家下车活动。可以推着婴儿车沿湖畔木栈道和游船码头散步约 1 小时，看天鹅和湖景。
 
-    function render() {
-      const root = document.getElementById("days");
-      days.forEach(function (day, dayIndex) {
-        const article = document.createElement("article");
-        article.className = "day";
-        const dayStops = day.stops.map(function (stop) { return stop.query; });
-        article.innerHTML =
-          "<header>" +
-            "<div>" +
-              "<p class=\"when\">" + day.date + " · " + day.dow + "</p>" +
-              "<h3>" + day.title + "</h3>" +
-            "</div>" +
-            "<button class=\"btn-secondary\" type=\"button\" data-day=\"" + dayIndex + "\">Open day</button>" +
-          "</header>" +
-          "<p class=\"meta\">" + day.transit + "</p>" +
-          "<ul class=\"stops\"></ul>" +
-          "<p class=\"hotel\">Stay: " + day.hotel + "</p>";
-        const list = article.querySelector("ul");
-        day.stops.forEach(function (stop, stopIndex) {
-          const li = document.createElement("li");
-          li.innerHTML =
-            "<label>" +
-              "<input type=\"checkbox\" data-query=\"" + stop.query.replace(/"/g, "") + "\"" +
-                (stop.hotel ? " data-hotel=\"1\"" : "") +
-                (stop.group ? " data-group=\"" + stop.group + "\"" : "") +
-                ">" +
-              "<span>" + (stopIndex + 1) + ". " + stop.name + "</span>" +
-            "</label>" +
-            "<a href=\"" + mapsSearch(stop.query) + "\" target=\"_blank\" rel=\"noopener\">Pin</a>";
-          list.appendChild(li);
-        });
-        article.querySelector("button").addEventListener("click", function () {
-          openItinerary(dayStops, day.defaultMode);
-        });
-        root.appendChild(article);
-      });
-      updateCount();
-    }
+中午
 
-    document.addEventListener("change", updateCount);
+- 11:30 在 Madl am Chiemsee Cafe Bistro 坐下看湖，点热食和热饮，把午餐和下午茶一并解决。
 
-    document.querySelectorAll("[data-plan]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        const mode = button.getAttribute("data-plan") === "alps" ? "driving" : "transit";
-        openItinerary(plans[button.getAttribute("data-plan")], mode);
-      });
-    });
+下午
 
-    document.getElementById("select-none").addEventListener("click", function () {
-      document.querySelectorAll('input[data-query]').forEach(function (box) { box.checked = false; });
-      updateCount();
-    });
+- 12:45–13:30 开车前往哈莱因。车上休息。
+- 14:00 抵达酒店，入住、洗漱。
+- 15:00–17:00 开车约 15 分钟到海尔布伦宫 Hellbrunn Palace 皇家花园。10 月中旬日落大约 18:15。长辈和宝宝在平的大草坪上推车散步，看喷泉和鸭子。下午不要脱衣盖被子大睡，撑到 20:00 后全家上床。
+- 17:30–18:45 在超市买面条、蔬菜和鸡蛋。Spar 或 Billa 18:00 关门。哈莱因国际斯帕超市 INTERSPAR Hallein 可以用。回民宿煮汤面。
+- 19:00 洗漱上床。
 
-    document.getElementById("plan-drive").addEventListener("click", function () {
-      openItinerary(selectedStops(), "driving");
-    });
+## 10月18日 周日
 
-    render();
-  
-</script>
+- 交通：自驾，市区短途
+- 住宿：Bauernbräugut，哈莱因
+- 下雨：玩具博物馆
+
+上午
+
+- 09:15–09:40 从哈莱因出发，开车约 25 分钟到萨尔茨堡。车停进城墙里的老城车库 Altstadt Garage。出库即是平路。离开车库前带上停车票。中午在老城合作餐厅或商店消费时，可以让店家在票上盖章，停车费打折。
+- 09:40–11:30 推婴儿车逛米拉贝尔花园 Mirabellgarten。10 月中旬红叶，适合拍全家福。可顺路经过莫扎特故居 Mozarts Wohnhaus，在萨尔察赫河边平地散步。
+
+中午
+
+- 11:30–13:30 在托马塞利咖啡馆 Café Tomaselli，或莫扎特广场 Mozartsplatz 附近的老城咖啡馆吃午餐。结账时出示 Altstadt Garage 停车票，让服务员盖章。
+
+下午
+
+- 13:30–14:00 在主教宫广场 Residenzplatz 推车散步，看喷泉和马车。石板路平坦。
+- 14:00–14:15 从广场步行约 1 分钟到缆车站，乘城堡缆车 Festungsbahn 上山。约 1 分钟进城堡，不用爬坡。
+- 14:15–16:15 在萨尔茨堡要塞 Festung Hohensalzburg 里参观。观景台可以俯瞰秋天的古城和河。公共区域和观景台大多有坡道，可以推车。用来帮宝宝午后放电、对抗时差。
+- 16:15–16:30 缆车下山。
+- 16:30–17:30 逛粮食胡同 Getreidegasse，看铁艺招牌。宝宝累了可以在推车里睡。可以买一盒莫扎特巧克力。
+- 17:30–17:50 步行回 Altstadt Garage 取车，回哈莱因。
+
+## 10月19日 周一
+
+- 交通：自驾，单程约 1 小时 15 分钟
+- 住宿：Bauernbräugut，哈莱因
+- 下雨：哈尔施塔特盐矿、博物馆、圣吉尔根莫扎特之家、巴德伊舍温泉浴场
+
+上午
+
+- 08:30–09:45 从哈莱因出发，前往萨尔茨卡默古特湖区的哈尔施塔特 Hallstatt。周一人相对少。
+- 09:45–11:30 车停在小镇外围公共停车场。沿平坦的湖畔大道进镇，走到明信片观景台 Classical Viewpoint of Hallstatt 拍全家福。
+
+中午
+
+- 11:30–13:30 在湖畔景观餐厅 Seehotel Grüner Baum 或附近传统餐厅吃午餐，可以点当地烤鱼。
+
+下午
+
+- 13:30–14:15 饭后沿平的湖边散步，在岸边喂天鹅。长辈可以坐长椅。
+- 14:15–15:00 沿湖区公路开往圣吉尔根 St. Gilgen。宝宝和长辈可以在车上睡。
+- 15:00–16:30 到圣吉尔根湖畔游乐场 Strandbad St. Gilgen Playground。宝宝在草地游乐场荡秋千、玩滑梯。长辈坐湖边木长椅，看沃尔夫冈湖。
+- 16:30–17:15 开车约 45 分钟回哈莱因，避开傍晚降温。
+
+## 10月20日 周二
+
+- 交通：自驾，单程约 40 分钟
+- 住宿：Bauernbräugut，哈莱因
+- 下雨：贝希特斯加登盐矿、Haus der Berge 国家公园游客中心
+
+上午
+
+- 08:45–09:25 从哈莱因出发，过奥德边境，到国王湖大车场 Königssee Parkplatz。车位多，出库路面平。
+- 09:25–09:45 给宝宝穿好防风衣服。推车走过国王湖码头步行街 Königssee Seestrasse。在售票处买往返红葱头教堂的船票。
+- 09:45–10:20 折叠婴儿车登船，电动船游国王湖 Königssee。湖心时船员会吹小号，演示回音壁 Echowand。
+- 10:20–11:30 船到圣巴托罗买教堂 St. Bartholomä。冬季时刻表下，这一站是终点。半岛有平的草地，可以推车散步，或用背带带宝宝在湖边捡落叶、拍全家福。
+
+中午
+
+- 11:30–13:00 在教堂旁的圣巴托罗买餐厅 Fischerstüberl St. Bartholomä 室内用餐，躲湖风。宝宝可以点热汤，大人可以点烟熏鳟鱼。
+
+下午
+
+- 13:00–14:15 在半岛平地散步。下午的阳光最暖。石板路和碎石路推车会颠，长辈可以牵着宝宝在湖边慢走，看野鸭。
+- 14:15–14:50 乘返程电动船离开。山谷里下午降温很快。
+- 14:50–15:30 回到北岸，在 Königssee Cafe Area 停留。长辈喝热咖啡，宝宝喝温水或吃零食。
+- 15:30–16:10 取车，开车约 40 分钟回哈莱因。
+
+## 10月21日 周三
+
+- 交通：自驾加地铁，约 1.5–2 小时。慕尼黑 M 区小团体日票 Gruppen-Tageskarte Zone M
+- 住宿：Residence Inn by Marriott Munich City East
+- 下雨：德意志博物馆儿童王国
+
+上午
+
+- 09:00–09:30 早餐，退房。
+- 09:30–11:30 从哈莱因开车回慕尼黑市区。出发前在 App 里买团体天票。长辈和宝宝可以在安全座椅上睡。
+- 11:30–11:50 直达慕尼黑东区万豪行政公寓。门口临时停靠，全家不用下车。爸爸把大件行李卸下，推进大堂寄存，并登记会员。
+- 11:50–12:10 行李寄存后，5 口人继续上车，开到英国花园西南入口附近的平地。定位：Lerchenfeldstraße 1a。
+
+中午
+
+- 12:10 在英国花园入口，妈妈、两位长辈和宝宝带婴儿车下车，开始他们的行程。
+- 家属在公园旁的 Fräulein Grüneis 坐下吃简餐。
+- 爸爸独自开车去火车站北侧 OMV Tankstelle（Dachauer Str. 21）加满油，留好小票。然后去火车站西侧 SIXT 还车点。还车停车场：Hirtenstraße 14。把车、钥匙和安全座椅交给 SIXT，检查后完成还车。
+
+下午
+
+- 13:00–13:55 爸爸从 Hirtenstraße 步行约 200 米到 Hauptbahnhof Nord，乘 100 路到 Nationalmuseum/Haus der Kunst（10 站），再步行约 150 米到 Fräulein Grüneis，和家人汇合吃午餐。
+- 14:00–14:30 汇合后推进公园，到冰溪冲浪点 Eisbachwelle。在桥上看冲浪。
+- 14:30–16:30 在英国花园 Englischer Garten 散步。步道平、宽。可以踩落叶，顺路到中国塔 Chinesischer Turm。
+- 16:30–17:00 傍晚降温前离开。在公园东侧乘 54 或 58 路公交到酒店门口，不用进地铁搬推车。到 Residence Inn 前台拿钥匙，取寄存的行李入住。
+- 17:00–18:30 安顿。可以下楼到东站地下的 Edeka Ernst Ostbahnhof 买晚饭食材。妈妈陪宝宝洗澡。
+- 18:30–20:00 在公寓厨房做晚饭。
+
+## 10月22日 周四
+
+- 交通：高铁和地铁。慕尼黑 M 区小团体日票 Gruppen-Tageskarte Zone M
+- 住宿：Residence Inn by Marriott Munich City East
+
+上午
+
+- 08:30–08:50 从酒店步行到慕尼黑东站 München Ost，乘任意一班 S-Bahn 到慕尼黑中央火车站 München Hbf。
+- 08:50–09:40 到总站。给长辈买热饮，折叠好婴儿车，在对应车厢区域候车。大约 9:10–9:15 到站台。
+- 09:41–11:01 ICE 1094。09:41 发车，11:01 到乌尔姆。车程 1 小时 20 分钟。
+- 11:01–12:00 到乌尔姆中央火车站 Ulm Hbf。平地推车到市中心乌尔姆大教堂广场 Münsterplatz，看教堂塔尖。避开上坡台阶。
+
+中午
+
+- 12:00–14:00 在渔人区 Fischerviertel 小溪畔的 Allgäuer Hof，或附近溪景餐厅吃午餐。选靠窗或露天亲水位，宝宝可以看溪里的野鸭。
+
+下午
+
+- 14:00–14:30 从餐厅平地步行约 15 分钟到爱因斯坦喷泉 Einstein-Brunnen。和吐舌头雕像合影，并在此处或附近与同事会合。
+- 14:30–15:45 和同事叙旧。
+  - 晴天：一起去多瑙河墙畔的玫瑰园 Rosengarten。沿无障碍坡道走上乌尔姆古城墙步道 Ulmer Stadtmauer，在古船模型广场 Donauschwalbe 附近散步，看多瑙河 Donau。
+  - 雨天：去 Barfüßer（Neue Straße 87）室内见面喝咖啡。下雨可以跳过爱因斯坦喷泉和玫瑰园。
+- 15:45–16:05 和同事道别，步行回 Ulm Hbf。
+- 16:05–16:28 有约 23 分钟。上洗手间，在站台折叠婴儿车，登上 16:28 的 ICE 919。
+
+傍晚
+
+- 16:28–17:42 ICE 919。16:28 发车，17:42 到慕尼黑总站。车程 1 小时 14 分钟，宝宝可以睡午觉。
+- 17:42–18:15 到 München Hbf 后不用出站，在地下站台换乘轻轨到东站。步行约 2 分钟回 Residence Inn。
+- 18:15–20:00 下楼到慕尼黑东站地下超市买面条和蔬菜，回房间煮汤面。宝宝 20:00 熄灯。
+
+## 10月23日 周五
+
+- 交通：地铁。慕尼黑 M 区小团体日票 Gruppen-Tageskarte Zone M
+- 住宿：Residence Inn by Marriott Munich City East
+- 下雨：德意志博物馆、慕尼黑海洋生物水族馆、老城区玩具博物馆、儿童与青少年博物馆
+
+上午
+
+- 09:30–09:50 酒店早餐后出发。走出 Residence Inn，在慕尼黑东站乘地铁 U5（Laimer Platz 方向）3 站到 Odeonsplatz，换乘 U3（Moosach 方向）到 Olympiazentrum。出站乘无障碍电梯到地面，推进宝马世界入口。
+- 09:50–11:45 宝马世界 BMW Welt。室内平、有冷暖气。长辈可以在展厅或咖啡区沙发上坐。宝宝可以坐进展车里转方向盘。
+- 11:45–12:25 从 Olympiazentrum 乘 U3 到 Moosach（原文写 54 站，按线路是短途几站），换乘 51 路，坐 12 站到 Hirschgartenallee。
+
+中午
+
+- 12:25–13:40 出站乘直梯到地面，推车步行约 5 分钟，到皇家鹿园客栈 Königlicher Hirschgarten Restaurant 吃午餐。可以点巴伐利亚烤猪手、德式香肠和扭结饼。
+- 13:40–14:40 饭后到餐厅对面的皇家鹿园梅花鹿生态围栏。看梅花鹿。看累了放下婴儿车防风罩，宝宝可以在推车里午睡。长辈在林荫道散步，或坐长椅。
+
+下午
+
+- 14:40–14:55 从鹿园向西，在平的林荫道走 10–15 分钟，进入宁芬堡宫一带。
+- 14:55–16:55 宁芬堡宫 Schloss Nymphenburg。不爬台阶进宫殿。在门前平的皇家运河 Nymphenburger Kanal 边散步。运河里有天鹅、野鸭和加拿大鹅。可以在岸边喂天鹅，以宫殿为背景拍全家福。
+- 16:55–17:45 降温前离开。在宫殿正门 Schloss Nymphenburg 站乘 17 路有轨电车，12 站到慕尼黑中央火车站，乘无障碍电梯换乘 S-Bahn（U5 或 S1、S2、S3、S4、S6、S7、S8 均可）到慕尼黑东站，回 Residence Inn。
+- 17:45–18:30 在东站地下的 Edeka 或 dm 采购。
+- 18:30–20:00 回公寓吃晚饭。宝宝 20:00 上床。
+
+## 10月24日 周六
+
+- 交通：德国高铁约 4 小时，加单程有轨电车。4 张慕尼黑单程票 Zone M（Single Ticket）。4 张柏林短途票（Kurzstrecke）
+- 住宿：Adina Apartment Hotel Berlin Mitte
+
+上午
+
+- 09:30–10:30 酒店早餐后收拾大件行李，退房。在大堂整理行李、安全座椅和折叠婴儿车。
+- 10:30–11:00 从东站乘城市轻轨到哈克桥站或慕尼黑中央火车站。出站后推车去旁边的餐厅，行李和推车随身带。
+- 11:15–12:50 在阿古斯蒂纳大客栈 Augustiner-Keller 吃午餐。点烤猪手和扭结饼。5 口人带行李和推车，坐宽敞的室内大厅。
+
+中午
+
+- 12:50–13:17 饭后推婴儿车和小推车，步行约 5 分钟到 München Hbf，到长途高铁站台候车并登车。
+- 13:17–17:48 ICE 1006。5 口人坐预先留好的高铁幼儿封闭包厢 Kleinkindabteil。拉上门后是独立隔音空间。宝宝可以在地上玩玩具、吃零食。
+
+下午
+
+- 17:48–18:15 到柏林后：从站台找直梯，下到 0 层大厅，从 Europaplatz 出口出去。正前方是有轨电车站台。M5、M8、M10 哪辆先来上哪辆，不要坐开往中央车站终点站的那一辆。坐 1 站，在 Berlin, Invalidenpark 下车，平推行李步行约 1 分钟到 Adina。
+- 18:15–18:30 办理入住。
+
+傍晚
+
+- 18:30–19:15 长辈和宝宝在房间洗漱、喝水、躺下。爸爸步行约 5 分钟去附近的 dm。明天是周日，全德国商店依法关门，今晚要买齐这几天的婴儿用品、奶粉、尿不湿，以及给长辈备用的保健品。超市可以用 REWE 或 Edeka。
+- 19:15–20:30 回房间，用公寓厨房煮汤面。宝宝在 20:30 前熄灯。
+
+## 10月25日 周日
+
+- 交通：有轨电车。柏林 AB 区小团体 24 小时票 Kleingruppen-Tageskarte
+- 住宿：Adina Apartment Hotel Berlin Mitte
+- 下雨：乐高探索中心、FEZ-Berlin、ANOHA、Futurium
+
+上午
+
+- 09:30–09:50 早餐后出发。步行约 2 分钟到路口的 Invalidenpark 有轨电车站。乘 M10（Warschauer Str. 方向）3 站，在 Gedenkstätte Berliner Mauer 下车。M10 是低底盘，推车不用折叠，可以停在车厢中部的婴儿车区。
+- 09:50–11:45 柏林墙纪念馆 Gedenkstätte Berliner Mauer。露天大草坪，平，没有台阶。可以踩落叶，看柏林墙遗迹。
+
+中午
+
+- 11:45–13:30 在纪念馆附近的 Superfoods & Organic Liquids，或附近暖和的德式小馆吃简餐、喝热饮。
+
+下午
+
+- 13:30–14:00 到附近的 Nordbahnhof，乘 S1 往市中心方向 2 站，到 Friedrichstraße。沿平的人行道走约 260 米，到施普雷河畔弗里德里希大街码头 Anlegestelle Friedrichstraße。
+- 14:00–16:00 登上施普雷河玻璃舱观光船。船舱有全景窗，挡风挡雨。可以喝茶、吃点心，从水路看柏林大教堂 Berliner Dom、国会大厦 Reichstagsgebäude 和博物馆岛。航程约 1 到 2 小时。宝宝可以在座位上打盹。
+- 16:00–16:20 船回码头。弗里德里希大街码头离 Adina 约 800 米平路。傍晚不冷可以散步约 10 分钟走回酒店。风大降温就在码头坐 147 或 12 路。
+- 16:20–18:30 回房间。长辈休息，妈妈陪宝宝洗澡。用厨房做清淡晚饭。宝宝 20:00 熄灯。
+
+## 10月26日 周一
+
+- 交通：有轨电车和公交。柏林 AB 区小团体 24 小时票
+- 住宿：Adina Apartment Hotel Berlin Mitte
+
+上午
+
+- 09:30–09:50 早餐后出发。步行约 2 分钟到 Invalidenpark，乘 M10（U Turmstr 方向）1 站到柏林中央火车站 Berlin Hbf。换乘 M41（Sonnenallee/Baumschulenstr 方向），在 S Potsdamer Platz Bhf/Voßstr. 下车。
+- 09:50–12:00 从南门进入蒂尔加滕公园 Tiergarten。推车步行约 1 公里到路易丝岛上的路易丝王后纪念碑 Luisendenkmal。10 月中下旬这里红叶和银杏很多。步道宽、平。宝宝可以踩落叶、捡橡果。长辈可以在长椅上晒太阳。
+
+中午
+
+- 12:00–14:00 乘 200 路（Tiergartenstr 到 Nordische Botschaften），步行约 500 米到新湖咖啡馆 Café am Neuen See 吃午餐。室内玻璃房或靠湖的位子。可以点德式菜、热汤和热饮。宝宝可以看湖里的野鸭。
+
+下午
+
+- 14:00–14:40 回到 Nordische Botschaften 公交站，乘 100 路（S+U Alexanderplatz 方向）6 站，在 S+U Brandenburger Tor 下车。在勃兰登堡门 Brandenburger Tor 广场散步、合影。
+- 14:40–15:00 进入勃兰登堡门地铁站，乘直梯下到站台。乘 U5（Hauptbahnhof 方向）2 站到 Berlin Hauptbahnhof，换乘 M8 到 Invalidenpark。出站平推约 150 米回酒店。
+- 15:00–17:00 回酒店游泳。宝宝在 Adina 室内温水泳池玩水。长辈在热水按摩浴缸 Jacuzzi 里泡。
+- 17:00–18:30 回房间休息。周一超市营业。需要水果或牛奶时，可以步行约 3 分钟到隔壁 EDEKA Sapphire。
+- 18:30–20:00 做面条或清淡晚饭。宝宝 20:00 熄灯。
+
+## 10月27日 周二
+
+- 交通：有轨电车和地铁。柏林 AB 区小团体 24 小时票
+- 住宿：Adina Apartment Hotel Berlin Mitte
+
+上午
+
+- 08:40–09:00 早餐后出发。步行约 3 分钟到 Invalidenpark，乘 M10（U Turmstr 方向）6 站到 U Turmstr。换乘 U9 到 Zoologischer Garten。出站是动物园北侧狮子门 Löwentor。全程平，没有台阶。
+- 09:00–12:00 柏林动物园 Zoologischer Garten Berlin。园区没有台阶，路面平。每隔十几米有长椅。
+
+中午
+
+- 12:00–13:30 不用出园。到园内动物园大餐厅 Zoo Restaurant 吃午餐。有巴伐利亚和国际家庭菜、热汤和儿童套餐。
+
+下午
+
+- 13:30–15:30 继续逛。大熊猫馆 Panda Garden、北极熊馆 Polar Bear Pavilion。这段时间宝宝可以在推车里睡。醒后去儿童动物园 Petting Zoo，可以摸和喂小羊羔、小兔子。
+- 15:30–16:15 结束游览后，U9 换乘 M10 回酒店。
+- 16:15–18:30 回 Adina。长辈休息，妈妈陪宝宝洗澡换衣服。厨房里烧水，给宝宝洗水果。
+- 18:30–20:00 做晚饭。宝宝 20:00 熄灯。
+
+## 10月28日 周三
+
+- 交通：轻轨 S-Bahn，约 30–40 分钟。柏林 AB 区小团体 24 小时票
+- 住宿：Adina Apartment Hotel Berlin Mitte
+
+上午
+
+- 09:15–09:30 早餐后出发。从酒店沿平路步行约 3 分钟，到 Invalidenpark 的 M5 站台（Gehrenseestraße / Bus 方向），坐 3 站到 Oranienburger Str.。
+- 09:30–10:10 换乘 S1，往西南郊区，车厢人少。约 40 分钟。宝宝看沿途秋景，长辈靠着休息。
+- 10:10–12:00 到屠夫湖轻轨站 S-Bahn Schlachtensee。出站对面就是屠夫湖 Schlachtensee。没有楼梯。湖边是金色森林，湖水清。沿平的湖畔林荫道散步。
+
+中午
+
+- 12:00–14:00 沿湖边走到百年老店渔人木屋餐厅 Fischerhütte am Schlachtensee。在靠湖的花园里晒太阳。可以点德式烤肠、巴伐利亚炖菜和热饮。湖上有黑天鹅和野鸭。
+
+下午
+
+- 14:00–14:40 两点原路回 Schlachtensee 站，乘 S1 回市中心，换乘 M5 回 Adina。
+- 14:40–18:30 回公寓后分开做事。
+  - 家属：长辈和宝宝换睡衣，睡一个长午觉。妈妈用房间里的洗衣机和烘干机把前半程脏衣服洗净烘干，再打包。
+  - 爸爸：在客厅把大件行李箱、尿不湿、折叠推车做最后打包。然后去柏林购物中心 Mall of Berlin（M5 换乘 M41），补免税礼物、化妆品或本地特产，并办退税单据。
+- 18:30–20:00 回房间煮清淡汤面。晚饭后行李贴标签、封箱。宝宝 20:00 熄灯。
+
+## 10月29日 周四
+
+- 交通：有轨电车，再加机场快线。柏林 ABC 区 24 小时小团体票 24-Stunden-Karte Kleingruppe
+- 住宿：飞机上，返回新加坡
+
+上午
+
+- 07:15–08:00 简单早餐后，把封箱行李和折叠婴儿车推到前台退房。步行约 2 分钟到 Invalidenpark，乘 M8（S+U Hauptbahnhof 方向）2 站，约 3 分钟，到柏林中央火车站。乘直梯降到地下低月台，上机场快线 FEX。用前一晚在手机 App 买好的 ABC 区小团体 24 小时票。3 岁宝宝免票。
+- 08:00–08:45 FEX 约 30 分钟到柏林勃兰登堡机场 BER 地下车站。乘直梯到出发大厅，到汉莎柜台办联程值机，大件行李托运到新加坡。在柏林一次办好两段登机牌。
+- 08:45–10:00 推婴儿车过安检。第一段是欧洲境内航段，BER 不做出境证件检查。走家庭优先登机，在登机口把折叠婴儿车交给地勤。
+- 10:45–11:55 汉莎 LH 179 飞法兰克福。约 1 小时 10 分钟。
+
+中午
+
+- 11:55–13:00 降落法兰克福机场 FRA。不取托运行李，走国际中转。带着前一天在柏林盖好章的退税单，在法兰克福机场海关柜台完成退税盖章。然后边检出境，去新航登机口。
+- 13:00–13:35 到新加坡航空登机口。家庭优先登机。进舱后把随身推车交给空乘。
+- 13:35–15:30 新航 SQ 329 从法兰克福起飞。机上吃午餐。长辈喝茶，宝宝吃预先订好的新航儿童餐。
+
+下午
+
+- 15:30–22:00 向东飞。宝宝在座位上睡午觉。
+- 次日 08:55 新加坡时间降落新加坡樟宜机场 SIN。出舱门后在廊桥口取折叠婴儿车，过关并取托运行李。
+
+## 签证版
+
+这是缩短后的签证稿。住宿、交通和上面的逐日安排有几处不一样（例如萨尔茨堡写成 Anif 的 Hotel Das Essigmanngut，柏林写成出租车，还车写成 10 月 24 日）。出行以逐日安排为准。
+
+| 日期 | 路线与交通 | 计划活动 | 住宿 |
+| --- | --- | --- | --- |
+| 10月16日 周五 | 新加坡至慕尼黑，SQ 2203 | 直飞慕尼黑 | 飞机上过夜 |
+| 10月17日 周六 | 慕尼黑机场至萨尔茨堡，租车自驾 | 抵达 MUC，取车，前往萨尔茨堡，下午游览海尔布伦宫花园 | Hotel Das Essigmanngut，奥地利萨尔茨堡 / 阿尼夫 |
+| 10月18日 周日 | 萨尔茨堡，当地交通 | 老城区，米拉贝尔花园，城堡缆车到萨尔茨堡要塞 | 同上 |
+| 10月19日 周一 | 萨尔茨堡至哈尔施塔特，租车往返 | 哈尔施塔特一日游，湖岸步行，短暂停留沃尔夫冈湖圣吉尔根 | 同上 |
+| 10月20日 周二 | 萨尔茨堡至国王湖，租车往返 | 国王湖一日游，游船到圣巴多罗买礼拜堂，岛上及教堂周边步行 | 同上 |
+| 10月21日 周三 | 萨尔茨堡至慕尼黑，租车自驾 | 退房，开车到慕尼黑入住，下午步行英国花园 | Residence Inn by Marriott Munich City East |
+| 10月22日 周四 | 慕尼黑至乌尔姆，租车往返 | 乌尔姆一日游，渔人区，沿古城墙漫步 | 同上 |
+| 10月23日 周五 | 慕尼黑，当地交通 | 宝马世界，下午宁芬堡宫花园 | 同上 |
+| 10月24日 周六 | 慕尼黑至柏林，ICE | 在慕尼黑中央车站还车，乘 ICE 到柏林，入住休息 | Adina Apartment Hotel Berlin Mitte |
+| 10月25日 周日 | 柏林，出租车或步行 | 柏林墙纪念馆（贝瑙尔大街），下午施普雷河观光游船 | 同上 |
+| 10月26日 周一 | 柏林，出租车或步行 | 蒂尔加滕公园徒步，下午在酒店休息 | 同上 |
+| 10月27日 周二 | 柏林，出租车或步行 | 全天柏林动物园 | 同上 |
+| 10月28日 周三 | 柏林，S-Bahn | 早上乘 S1 去战湖 Schlachtensee，湖区步行，下午整理行李 | 同上 |
+| 10月29日 周四 | 柏林至新加坡 | 退房，出租车去 BER，LH 179，再乘 SQ 329 回新加坡 | 旅途中 |
