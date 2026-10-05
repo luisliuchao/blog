@@ -99,11 +99,19 @@ async function loadPosts() {
     attachments.set(name, `/attachments/${encodeURI(name)}`);
   }
   return prepared.map((post) => {
+    const rendered = post.itineraryMarkdown
+      ? renderMarkdown(post.itineraryMarkdown, {
+          findPost,
+          attachments,
+          stack: new Set([post.slug])
+        })
+      : '';
+    const own = post.raw
+      ? post.content.trim()
+      : renderMarkdown(post.content, { findPost, attachments, stack: new Set([post.slug]) });
     return {
       ...post,
-      html: post.raw
-        ? post.content.trim()
-        : renderMarkdown(post.content, { findPost, attachments, stack: new Set([post.slug]) })
+      html: rendered ? `${rendered}\n${own}` : own
     };
   });
 }
@@ -218,6 +226,26 @@ for (const post of posts) {
   const dir = join(distDir, 'posts', post.slug);
   await mkdir(dir, { recursive: true });
   await writeFile(join(dir, 'index.html'), renderPost(post));
+  if (post.redirectFrom) {
+    const redirectDir = join(distDir, post.redirectFrom.replace(/^\/+|\/+$/g, ''));
+    await mkdir(redirectDir, { recursive: true });
+    await writeFile(
+      join(redirectDir, 'index.html'),
+      `<!doctype html>
+<html lang="${site.language}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=${escapeHtml(post.path)}">
+  <link rel="canonical" href="${escapeHtml(`${site.url}${post.path}`)}">
+  <title>${escapeHtml(post.title)}</title>
+</head>
+<body>
+  <p><a href="${escapeHtml(post.path)}">${escapeHtml(post.title)}</a></p>
+</body>
+</html>
+`
+    );
+  }
 }
 await writeFile(join(distDir, 'feed.xml'), renderFeed(posts));
 await writeFile(join(distDir, 'sitemap.xml'), renderSitemap(posts));

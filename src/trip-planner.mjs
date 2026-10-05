@@ -193,13 +193,16 @@ export function renderPlanner({ days, itineraryPath }) {
     })
     .join('\n');
   const buttonRow = buttons ? `  <div class="cta-row">\n${buttons}\n  </div>\n` : '';
+  const planLink = itineraryPath
+    ? ` The written day-by-day plan is <a href="${escapeHtml(itineraryPath)}">the itinerary</a>.`
+    : '';
   const payload = jsonForScript({
     days: daysForClient(days),
     plans,
     planModes
   });
   return `<div class="planner">
-  <p>家庭旅行行程单. Singapore to Hallein, Salzburg, Munich, Ulm, and Berlin. Each button opens a Google Maps itinerary. Google Maps allows 9 stops between start and end, so a long selection opens as sequential legs. The written day-by-day plan is <a href="${escapeHtml(itineraryPath)}">the itinerary</a>.</p>
+  <p>家庭旅行行程单. Singapore to Hallein, Salzburg, Munich, Ulm, and Berlin. Each button opens a Google Maps itinerary. Google Maps allows 9 stops between start and end, so a long selection opens as sequential legs.${planLink}</p>
 ${buttonRow}  <div id="days"></div>
   <div class="planner-bar">
     <span id="selected-count">0 stops selected</span>
@@ -369,16 +372,14 @@ export function preparePlannerPosts(posts) {
       throw new Error(`${post.slug}: duplicate planner slug ${meta.slug}`);
     }
     taken.add(meta.slug);
-    prepared.push({
-      ...post,
-      content: stripPlannerFences(post.content)
-    });
     generated.push({
       slug: meta.slug,
       title: meta.title,
       date: post.date,
       description: meta.description || post.description,
-      content: renderPlanner({ days, itineraryPath: post.path }),
+      content: renderPlanner({ days, itineraryPath: '' }),
+      itineraryMarkdown: stripPlannerFences(post.content),
+      redirectFrom: post.path === `/posts/${meta.slug}/` ? '' : post.path,
       raw: true,
       gate: post.gate,
       path: `/posts/${meta.slug}/`,

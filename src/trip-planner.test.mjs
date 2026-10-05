@@ -184,13 +184,12 @@ test('publishes a raw map page and hides the fences on the itinerary', () => {
   ]);
   assert.deepEqual(
     posts.map((post) => post.slug),
-    ['family-europe-itinerary', 'family-europe-2026']
+    ['family-europe-2026']
   );
-  const itinerary = posts[0];
-  const planner = posts[1];
-  assert.equal(itinerary.raw, false);
-  assert.doesNotMatch(itinerary.content, /```planner/);
-  assert.match(itinerary.content, /const keep = true/);
+  const planner = posts[0];
+  assert.equal(planner.redirectFrom, '/posts/family-europe-itinerary/');
+  assert.doesNotMatch(planner.itineraryMarkdown, /```planner/);
+  assert.match(planner.itineraryMarkdown, /const keep = true/);
   assert.equal(planner.raw, true);
   assert.equal(planner.gate, true);
   assert.equal(planner.title, 'Family Europe trip');
@@ -216,18 +215,18 @@ test('the published itinerary is the map source', async () => {
       plannerDescription: parsed.data.plannerDescription
     }
   ]);
-  const planner = posts.find((post) => post.slug === 'family-europe-2026');
-  const itinerary = posts.find((post) => post.slug === 'family-europe-itinerary');
-  assert.ok(planner);
+  assert.equal(posts.length, 1);
+  const planner = posts[0];
+  assert.equal(planner.slug, 'family-europe-2026');
   assert.match(planner.content, /Open Alps driving plan/);
   assert.match(planner.content, /Open Munich plan/);
   assert.match(planner.content, /Open Berlin plan/);
   assert.match(planner.content, /Bauernbräugut Hofladen Appartements Hallein/);
   assert.match(planner.content, /Berlin Brandenburg Airport BER/);
   assert.equal(planner.gate, true);
-  assert.doesNotMatch(itinerary.content, /```planner/);
-  assert.match(itinerary.content, /\| 计划活动 \|/);
-  assert.match(itinerary.content, /Bauernbräugut，哈莱因/);
-  assert.doesNotMatch(itinerary.content, /Essigmanngut/);
+  assert.doesNotMatch(planner.itineraryMarkdown, /```planner/);
+  assert.match(planner.itineraryMarkdown, /计划活动/);
+  assert.match(planner.itineraryMarkdown, /Bauernbräugut，哈莱因/);
+  assert.doesNotMatch(planner.itineraryMarkdown, /Essigmanngut/);
   assert.equal(parsed.content.match(/```planner/g).length, 14);
 });
