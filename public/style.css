@@ -148,6 +148,32 @@ h1 {
   margin: 0 0 1rem;
 }
 
+.prose {
+  overflow-x: auto;
+}
+
+.prose table {
+  width: 100%;
+  min-width: 46rem;
+  margin: 0 0 1rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.prose th,
+.prose td {
+  padding: 0.55rem 0.45rem;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  text-align: left;
+}
+
+.prose th {
+  color: var(--faded);
+  font-weight: 600;
+}
+
 .prose pre,
 .prose code {
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;

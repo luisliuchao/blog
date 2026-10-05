@@ -226,6 +226,8 @@ test('the published itinerary is the map source', async () => {
   assert.match(planner.content, /Berlin Brandenburg Airport BER/);
   assert.equal(planner.gate, true);
   assert.doesNotMatch(itinerary.content, /```planner/);
-  assert.match(itinerary.content, /## 10月16日 周五/);
-  assert.match(itinerary.content, /## 签证版/);
+  assert.match(itinerary.content, /\| 计划活动 \|/);
+  assert.match(itinerary.content, /Bauernbräugut，哈莱因/);
+  assert.doesNotMatch(itinerary.content, /Essigmanngut/);
+  assert.equal(parsed.content.match(/```planner/g).length, 14);
 });
